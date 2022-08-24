@@ -1,10 +1,10 @@
 # FastLib
 
-<h1>DEPENDENCIES</h1>
+<h2>DEPENDENCIES</h2>
  <p> $ pip install aiomysql </p>
- <p> pip install databases </p>
- <p> pip install uvicorn </p>
- <p> pip install fastapi </p>
+ <p> $ pip install databases </p>
+ <p> $ pip install uvicorn </p>
+ <p> $ pip install fastapi </p>
 
-HOW TO RUN 
- <p> python3 -m uvicorn main:app --reload </p>
+<h2>HOW TO RUN </h2>
+ <p> $ python3 -m uvicorn main:app --reload </p>
