@@ -3,16 +3,16 @@ import sys
 sys.path.append('../')
 
 from env import DB
-from queries.GenerosQueries import GenerosQueries
+from queries.LogsQueries import LogsQueries
 
-class GenerosController:
+class LogsController:
 
-    async def getGeneros():
+    async def getLogs():
 
         try:
 
             await DB.connection.connect()
-            query = GenerosQueries.getAll
+            query = LogsQueries.getAll
             rows = await DB.connection.fetch_all(query=query)
             await DB.connection.disconnect()
 
@@ -20,9 +20,10 @@ class GenerosController:
                 response = {"success":True, "message":"Data not found", "data":None}
             else:
                 response = {"success":True, "message":"OK", "data":rows}
-
+            
             return response
         
         except:
 
             return { "success": False, "message":"Erro Interno", "data": None}
+        

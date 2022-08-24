@@ -3,24 +3,24 @@ import sys
 sys.path.append('../')
 
 from env import DB
-from queries.GenerosQueries import GenerosQueries
+from queries.LivrosQueries import LivrosQueries
 
-class GenerosController:
+class LivrosController:
 
-    async def getGeneros():
+    async def getLivros():
 
         try:
 
             await DB.connection.connect()
-            query = GenerosQueries.getAll
+            query = LivrosQueries.getAll
             rows = await DB.connection.fetch_all(query=query)
             await DB.connection.disconnect()
 
             if len(rows) == 0:
                 response = {"success":True, "message":"Data not found", "data":None}
             else:
-                response = {"success":True, "message":"OK", "data":rows}
-
+                response = {"success":True, "message":"Data not found", "data":rows}
+            
             return response
         
         except:
