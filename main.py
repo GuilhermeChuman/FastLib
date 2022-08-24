@@ -11,21 +11,44 @@ from controllers.LogsController import LogsController
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
 
-app = FastAPI()
+tags_metadata = [
+    {
+        "name": "Usuários",
+        "description": "Rotas relacionadas à listagem e manutenção de usuários",
+    },
+    {
+        "name": "Gêneros",
+        "description": "Rotas relacionadas à listagem e manutenção de gêneros literários.",
+    },
+]
+
+app = FastAPI(openapi_tags=tags_metadata)
 
 ###################################  Usuarios  ########################################
 
-@app.get("/usuarios")
+@app.get("/usuarios", tags=["Usuários"])
 async def getUsuarios():
     return await UsuariosController.getUsuarios()
 
-@app.post("/addUsuario")
+@app.get("/usuarios/{id}", tags=["Usuários"])
+async def getUsuarioById(id:int):
+    return await UsuariosController.getUsuarioById(id)
+
+@app.post("/addUsuario", tags=["Usuários"])
 async def addUsuario(item: UsuarioRequests):
     return await UsuariosController.addUsuario(item.dict())
 
+@app.put("/editUsuario/{id}", tags=["Usuários"])
+async def editUsuario(id: int, item: UsuarioRequests):
+    return await UsuariosController.editUsuario(id, item.dict())
+
+@app.delete("/deleteUsuario/{id}", tags=["Usuários"])
+async def editUsuario(item: UsuarioRequests):
+    return await UsuariosController.editUsuario(item.dict())
+
 ##################################  Generos  ##########################################
 
-@app.get("/generos")
+@app.get("/generos", tags=["Gêneros"])
 async def getGeneros():
     return await GenerosController.getGeneros()
 

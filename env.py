@@ -3,6 +3,7 @@ from databases import Database
 class DB:
 
     DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
+    #DATABASE_URL = "host='127.0.0.1',user=username, passwd=password,db=database_name"
     # SQLALCHEMY_DATABASE_URL = "127.0.0.1:8000"
     # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
