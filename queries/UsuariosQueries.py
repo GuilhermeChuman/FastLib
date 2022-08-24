@@ -12,3 +12,5 @@ class UsuariosQueries:
     edit += "validationToken = :validationToken, status = :status " 
     edit += "WHERE id = :id"
 
+    delete = "DELETE FROM Usuarios WHERE id = :id"
+

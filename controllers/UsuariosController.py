@@ -42,7 +42,7 @@ class UsuariosController:
 
             return { "success": True, "message":"OK", "data": data}
         
-        except:
+        except Exception as e:
 
             return { "success": False, "message":"Erro Interno", "data": None}
 
@@ -86,5 +86,25 @@ class UsuariosController:
         
         except Exception as e:
 
-            return { "success": False, "message":e.__class__, "data": None}    
+            return { "success": False, "message":"Erro Interno", "data": None}    
+
+    async def deleteUsuario(id):
+
+        try:
+
+            currentData = await UsuariosController.getUsuarioById(id)
+            if(currentData['data'] == None):
+                return { "success": False, "message":"Usuário não encontrado", "data": None}   
+
+            values = {'id': id}
+            await DB.connection.connect()
+            query = UsuariosQueries.delete
+            await DB.connection.execute(query=query, values=values)
+            await DB.connection.disconnect()
+
+            return { "success": True, "message":"OK", "data": None}
+        
+        except Exception as e:
+
+            return { "success": False, "message":"Erro Interno", "data": None}    
         

@@ -43,14 +43,30 @@ async def editUsuario(id: int, item: UsuarioRequests):
     return await UsuariosController.editUsuario(id, item.dict())
 
 @app.delete("/deleteUsuario/{id}", tags=["Usuários"])
-async def editUsuario(item: UsuarioRequests):
-    return await UsuariosController.editUsuario(item.dict())
+async def deleteUsuario(id:int):
+    return await UsuariosController.deleteUsuario(id)
 
 ##################################  Generos  ##########################################
 
 @app.get("/generos", tags=["Gêneros"])
 async def getGeneros():
     return await GenerosController.getGeneros()
+
+@app.get("/generos/{id}", tags=["Gêneros"])
+async def getGeneroById(id:int):
+    return await GenerosController.getGeneroById(id)
+
+@app.post("/addGenero", tags=["Gêneros"])
+async def addUsuario(item: UsuarioRequests):
+    return await GenerosController.addGenero(item.dict())
+
+@app.put("/editGenero/{id}", tags=["Gêneros"])
+async def editGenero(id: int, item: UsuarioRequests):
+    return await GenerosController.editGenero(id, item.dict())
+
+@app.delete("/deleteGenero/{id}", tags=["Gêneros"])
+async def deleteGenero(item: UsuarioRequests):
+    return await GenerosController.deleteGenero(item.dict())
 
 ################################   Autores   ##########################################
 

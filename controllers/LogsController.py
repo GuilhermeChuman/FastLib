@@ -25,5 +25,5 @@ class LogsController:
         
         except Exception as e:
 
-            return { "success": False, "message":e.__class__, "data": None}
+            return { "success": False, "message":"Erro Interno", "data": None}
         
