@@ -16,7 +16,7 @@ class UsuariosController:
             rows = await DB.connection.fetch_all(query=query)
             await DB.connection.disconnect()
 
-            if len(rows) == 0:
+            if rows == None:
                 response = {"success":True, "message":"Data not found", "data":None}
             else:
                 response = {"success":True, "message":"OK", "data":rows}
@@ -56,7 +56,7 @@ class UsuariosController:
             rows = await DB.connection.fetch_one(query=query, values=values)
             await DB.connection.disconnect()
 
-            if len(rows) == 0:
+            if rows == None:
                 return {"success":True, "message":"Data not found", "data":None}
             else:
                 return {"success":True, "message":"OK", "data":rows}

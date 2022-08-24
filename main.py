@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 #Controllers
 from controllers.GenerosController import GenerosController
@@ -10,6 +11,8 @@ from controllers.LogsController import LogsController
 
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
+from requests.GeneroRequests import GeneroRequests
+from requests.AutorRequests import AutorRequests
 
 tags_metadata = [
     {
@@ -20,13 +23,21 @@ tags_metadata = [
         "name": "Gêneros",
         "description": "Rotas relacionadas à listagem e manutenção de gêneros literários.",
     },
+    {
+        "name": "Autores",
+        "description": "Rotas relacionadas à listagem e manutenção de autores.",
+    },
 ]
 
 app = FastAPI(openapi_tags=tags_metadata)
 
+@app.get("/")
+async def standard():
+    return RedirectResponse("/docs")
+
 ###################################  Usuarios  ########################################
 
-@app.get("/usuarios", tags=["Usuários"])
+@app.get("/usuarios", tags=["Usuários"], summary="Listar todos os usuários")
 async def getUsuarios():
     return await UsuariosController.getUsuarios()
 
@@ -57,22 +68,38 @@ async def getGeneroById(id:int):
     return await GenerosController.getGeneroById(id)
 
 @app.post("/addGenero", tags=["Gêneros"])
-async def addUsuario(item: UsuarioRequests):
+async def addUsuario(item: GeneroRequests):
     return await GenerosController.addGenero(item.dict())
 
 @app.put("/editGenero/{id}", tags=["Gêneros"])
-async def editGenero(id: int, item: UsuarioRequests):
+async def editGenero(id: int, item: GeneroRequests):
     return await GenerosController.editGenero(id, item.dict())
 
 @app.delete("/deleteGenero/{id}", tags=["Gêneros"])
-async def deleteGenero(item: UsuarioRequests):
-    return await GenerosController.deleteGenero(item.dict())
+async def deleteGenero(id: int):
+    return await GenerosController.deleteGenero(id)
 
 ################################   Autores   ##########################################
 
-@app.get("/autores")
+@app.get("/autores", tags=["Autores"], summary="Listar todos os autores")
 async def getAutores():
     return await AutoresController.getAutores()
+
+@app.get("/autores/{id}", tags=["Autores"])
+async def getAutorById(id:int):
+    return await AutoresController.getAutorById(id)
+
+@app.post("/addAutor", tags=["Autores"])
+async def addUsuario(item: AutorRequests):
+    return await AutoresController.addAutor(item.dict())
+
+@app.put("/editAutor/{id}", tags=["Autores"])
+async def editAutor(id: int, item: AutorRequests):
+    return await AutoresController.editAutor(id, item.dict())
+
+@app.delete("/deleteAutor/{id}", tags=["Autores"])
+async def deleteAutor(id: int):
+    return await AutoresController.deleteAutor(id)
 
 ###############################   Editoras   ##########################################
 
