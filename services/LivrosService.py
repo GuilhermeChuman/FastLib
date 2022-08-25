@@ -22,6 +22,17 @@ class LivrosService:
 
         return response
 
+    async def filterLivros(item):
+
+        response = await LivrosRepository.getLivros()
+
+        expectedResult = [d for d in response if d['titulo'] in item['titulo']]
+    
+        if(len(expectedResult) == 0):
+            raise Exception("Livro não encontrado")
+
+        return expectedResult
+
     async def addLivro(item):
 
         response = await LivrosRepository.addLivro(item)

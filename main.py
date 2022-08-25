@@ -17,7 +17,9 @@ from requests.GeneroRequests import GeneroRequests
 from requests.AutorRequests import AutorRequests
 from requests.EditoraRequests import EditoraRequests
 from requests.LogRequests import LogRequests
+
 from requests.LivroRequests import LivroRequests
+from requests.LivroRequests import FilterRequests
 
 tags_metadata = [
     {
@@ -159,6 +161,10 @@ async def getLivros():
 @app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
 async def getLivroById(id:int):
     return await LivrosController.getLivroById(id)
+
+@app.post("/livros/", tags=["Livros"], summary="Listar livros através de filtro")
+async def filterLivros(item: FilterRequests):
+    return await LivrosController.filterLivros(item.dict())
 
 @app.post("/addLivro", tags=["Livros"], summary="Adicionar um novo Livro")
 async def addLivro(item: LivroRequests):

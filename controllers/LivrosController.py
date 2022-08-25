@@ -28,6 +28,18 @@ class LivrosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+
+    async def filterLivros(item):
+        
+        try:
+
+            response = await LivrosService.filterLivros(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def addLivro(item):
 
         try:
