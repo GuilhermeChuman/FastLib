@@ -41,41 +41,41 @@ async def standard():
 async def getUsuarios():
     return await UsuariosController.getUsuarios()
 
-@app.get("/usuarios/{id}", tags=["Usuários"])
+@app.get("/usuarios/{id}", tags=["Usuários"], summary="Listar um usuário pelo ID")
 async def getUsuarioById(id:int):
     return await UsuariosController.getUsuarioById(id)
 
-@app.post("/addUsuario", tags=["Usuários"])
+@app.post("/addUsuario", tags=["Usuários"], summary="Adicionar um novo usuário")
 async def addUsuario(item: UsuarioRequests):
     return await UsuariosController.addUsuario(item.dict())
 
-@app.put("/editUsuario/{id}", tags=["Usuários"])
+@app.put("/editUsuario/{id}", tags=["Usuários"], summary="Editar um usuário")
 async def editUsuario(id: int, item: UsuarioRequests):
     return await UsuariosController.editUsuario(id, item.dict())
 
-@app.delete("/deleteUsuario/{id}", tags=["Usuários"])
+@app.delete("/deleteUsuario/{id}", tags=["Usuários"], summary="Deletar um usuário")
 async def deleteUsuario(id:int):
     return await UsuariosController.deleteUsuario(id)
 
 ##################################  Generos  ##########################################
 
-@app.get("/generos", tags=["Gêneros"])
+@app.get("/generos", tags=["Gêneros"], summary="Listar todos os gêneros")
 async def getGeneros():
     return await GenerosController.getGeneros()
 
-@app.get("/generos/{id}", tags=["Gêneros"])
+@app.get("/generos/{id}", tags=["Gêneros"], summary="Listar um gênero por ID")
 async def getGeneroById(id:int):
     return await GenerosController.getGeneroById(id)
 
-@app.post("/addGenero", tags=["Gêneros"])
+@app.post("/addGenero", tags=["Gêneros"], summary="Adicionar um novo gêneros")
 async def addUsuario(item: GeneroRequests):
     return await GenerosController.addGenero(item.dict())
 
-@app.put("/editGenero/{id}", tags=["Gêneros"])
+@app.put("/editGenero/{id}", tags=["Gêneros"], summary="Editar um gênero")
 async def editGenero(id: int, item: GeneroRequests):
     return await GenerosController.editGenero(id, item.dict())
 
-@app.delete("/deleteGenero/{id}", tags=["Gêneros"])
+@app.delete("/deleteGenero/{id}", tags=["Gêneros"], summary="Deletar um gênero")
 async def deleteGenero(id: int):
     return await GenerosController.deleteGenero(id)
 
