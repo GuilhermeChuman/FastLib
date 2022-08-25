@@ -8,3 +8,7 @@ class UsuarioRequests(BaseModel):
     email: str
     validationToken: Union[str, None] = None
     status: str
+
+class AuthRequests(BaseModel):
+    login: str
+    password: str

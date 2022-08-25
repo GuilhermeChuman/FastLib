@@ -2,8 +2,7 @@ import sys
 
 sys.path.append('../')
 
-from env import DB
-from queries.LivrosQueries import LivrosQueries
+from services.LivrosService import LivrosService
 
 class LivrosController:
 
@@ -11,18 +10,53 @@ class LivrosController:
 
         try:
 
-            await DB.connection.connect()
-            query = LivrosQueries.getAll
-            rows = await DB.connection.fetch_all(query=query)
-            await DB.connection.disconnect()
+            response = await LivrosService.getLivros()
+            return { "success": True, "message":"OK", "data": response}
 
-            if len(rows) == 0:
-                response = {"success":True, "message":"Data not found", "data":None}
-            else:
-                response = {"success":True, "message":"OK", "data":rows}
-            
-            return response
-        
         except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
 
-            return { "success": False, "message":"Erro Interno", "data": None}
+    async def getLivroById(id):
+
+        try:
+
+            response = await LivrosService.getLivroById(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def addLivro(item):
+
+        try:
+
+            response = await LivrosService.addLivro(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def editLivro(id, item):
+
+        try:
+
+            response = await LivrosService.editLivro(id, item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def deleteLivro(id):
+
+        try:
+
+            response = await LivrosService.deleteLivro(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}

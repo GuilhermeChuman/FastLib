@@ -2,8 +2,7 @@ import sys
 
 sys.path.append('../')
 
-from env import DB
-from queries.LogsQueries import LogsQueries
+from services.LogsService import LogsService
 
 class LogsController:
 
@@ -11,19 +10,32 @@ class LogsController:
 
         try:
 
-            await DB.connection.connect()
-            query = LogsQueries.getAll
-            rows = await DB.connection.fetch_all(query=query)
-            await DB.connection.disconnect()
+            response = await LogsService.getLogs()
+            return { "success": True, "message":"OK", "data": response}
 
-            if len(rows) == 0:
-                response = {"success":True, "message":"Data not found", "data":None}
-            else:
-                response = {"success":True, "message":"OK", "data":rows}
-            
-            return response
-        
         except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
 
-            return { "success": False, "message":"Erro Interno", "data": None}
+    async def getLogById(id):
+
+        try:
+
+            response = await LogsService.getLogById(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def addLog(item):
+
+        try:
+
+            response = await LogsService.addLog(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
         

@@ -11,10 +11,19 @@ from controllers.LogsController import LogsController
 
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
+from requests.UsuarioRequests import AuthRequests
+
 from requests.GeneroRequests import GeneroRequests
 from requests.AutorRequests import AutorRequests
+from requests.EditoraRequests import EditoraRequests
+from requests.LogRequests import LogRequests
+from requests.LivroRequests import LivroRequests
 
 tags_metadata = [
+    {
+        "name": "Auth",
+        "description": "Rotas relacionadas à autenticação",
+    },
     {
         "name": "Usuários",
         "description": "Rotas relacionadas à listagem e manutenção de usuários",
@@ -27,6 +36,18 @@ tags_metadata = [
         "name": "Autores",
         "description": "Rotas relacionadas à listagem e manutenção de autores.",
     },
+    {
+        "name": "Editoras",
+        "description": "Rotas relacionadas à listagem e manutenção de editoras.",
+    },
+    {
+        "name": "Logs",
+        "description": "Rotas relacionadas à listagem e manutenção de logs.",
+    },
+    {
+        "name": "Livros",
+        "description": "Rotas relacionadas à listagem e manutenção de livros.",
+    },
 ]
 
 app = FastAPI(openapi_tags=tags_metadata)
@@ -34,6 +55,12 @@ app = FastAPI(openapi_tags=tags_metadata)
 @app.get("/")
 async def standard():
     return RedirectResponse("/docs")
+
+###################################  Auth  ########################################
+
+@app.post("/auth", tags=["Auth"], summary="")
+async def autenticate(item: AuthRequests):
+    return await UsuariosController.auth(item.dict())
 
 ###################################  Usuarios  ########################################
 
@@ -85,36 +112,76 @@ async def deleteGenero(id: int):
 async def getAutores():
     return await AutoresController.getAutores()
 
-@app.get("/autores/{id}", tags=["Autores"])
+@app.get("/autores/{id}", tags=["Autores"], summary="Listar um autor por ID")
 async def getAutorById(id:int):
     return await AutoresController.getAutorById(id)
 
-@app.post("/addAutor", tags=["Autores"])
+@app.post("/addAutor", tags=["Autores"], summary="Adicionar um novo autor")
 async def addUsuario(item: AutorRequests):
     return await AutoresController.addAutor(item.dict())
 
-@app.put("/editAutor/{id}", tags=["Autores"])
+@app.put("/editAutor/{id}", tags=["Autores"], summary="Editar um autor")
 async def editAutor(id: int, item: AutorRequests):
     return await AutoresController.editAutor(id, item.dict())
 
-@app.delete("/deleteAutor/{id}", tags=["Autores"])
+@app.delete("/deleteAutor/{id}", tags=["Autores"], summary="Deletar um autor")
 async def deleteAutor(id: int):
     return await AutoresController.deleteAutor(id)
 
 ###############################   Editoras   ##########################################
 
-@app.get("/editoras")
+@app.get("/editoras", tags=["Editoras"], summary="Listar todas as editoras")
 async def getEditoras():
     return await EditorasController.getEditoras()
 
+@app.get("/editoras/{id}", tags=["Editoras"], summary="Listar um editora por ID")
+async def getEditoraById(id:int):
+    return await EditorasController.getEditoraById(id)
+
+@app.post("/addEditora", tags=["Editoras"], summary="Adicionar uma nova editora")
+async def addEditora(item: EditoraRequests):
+    return await EditorasController.addEditora(item.dict())
+
+@app.put("/editEditora/{id}", tags=["Editoras"], summary="Editar uma editora")
+async def editEditora(id: int, item: EditoraRequests):
+    return await EditorasController.editEditora(id, item.dict())
+
+@app.delete("/deleteEditora/{id}", tags=["Editoras"], summary="Deletar uma editora")
+async def deleteEditora(id: int):
+    return await EditorasController.deleteEditora(id)
+
 ###############################    Livros    ##########################################
 
-@app.get("/livros")
+@app.get("/livros", tags=["Livros"], summary="Listar todos os livros")
 async def getLivros():
     return await LivrosController.getLivros()
 
+@app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
+async def getLivroById(id:int):
+    return await LivrosController.getLivroById(id)
+
+@app.post("/addLivro", tags=["Livros"], summary="Adicionar um novo Livro")
+async def addLivro(item: LivroRequests):
+    return await LivrosController.addLivro(item.dict())
+
+@app.put("/editLivro/{id}", tags=["Livros"], summary="Editar um Livro")
+async def editLivro(id: int, item: LivroRequests):
+    return await LivrosController.editLivro(id, item.dict())
+
+@app.delete("/deleteLivro/{id}", tags=["Livros"], summary="Deletar um Livro")
+async def deleteLivro(id: int):
+    return await LivrosController.deleteLivro(id)
+
 ###############################     Logs    ##########################################
 
-@app.get("/logs")
+@app.get("/logs", tags=["Logs"], summary="Listar todas os logs")
 async def getLivros():
     return await LogsController.getLogs()
+
+@app.get("/logs/{id}", tags=["Logs"], summary="Listar um log por ID")
+async def getLogById(id:int):
+    return await LogsController.getLogById(id)
+
+@app.post("/addLog", tags=["Logs"], summary="Adicionar um novo log")
+async def addLog(item: LogRequests):
+    return await LogsController.addLog(item.dict())

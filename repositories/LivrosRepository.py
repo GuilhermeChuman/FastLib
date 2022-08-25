@@ -3,66 +3,53 @@ import sys
 sys.path.append('../')
 
 from env import DB
-from queries.UsuariosQueries import UsuariosQueries
+from queries.LivrosQueries import LivrosQueries
 
-class UsuariosRepository:
+class LivrosRepository:
 
-    async def getUsuarios():
+    async def getLivros():
 
         await DB.connection.connect()
-        query = UsuariosQueries.getAll
+        query = LivrosQueries.getAll
         rows = await DB.connection.fetch_all(query=query)
         await DB.connection.disconnect()
         
         return rows
 
-    async def getUsuarioById(id):
+    async def getLivroById(id):
 
         values = {'id': id}
         await DB.connection.connect()
-        query = UsuariosQueries.getById
+        query = LivrosQueries.getById
         rows = await DB.connection.fetch_one(query=query, values=values)
         await DB.connection.disconnect()
 
         if rows == None:
-            raise Exception("Usuário não encontrado")
+            raise Exception("Livro não encontrada")
 
         else:
             return rows
 
-    async def auth(item):
+    async def addLivro(item):
 
         await DB.connection.connect()
-        query = UsuariosQueries.auth
-        rows = await DB.connection.fetch_one(query=query, values=item)
-        await DB.connection.disconnect()
-
-        if rows == None:
-            raise Exception("Usuário ou Senha inválidos")
-
-        else:
-            return True
-
-    async def addUsuario(item):
-
-        await DB.connection.connect()
-        query = UsuariosQueries.add
+        query = LivrosQueries.add
         values = [
             item
         ]
         await DB.connection.execute_many(query=query, values=values)
-        data = await DB.last_inserted_id('Usuarios')
+        data = await DB.last_inserted_id('Livros')
         await DB.connection.disconnect()
 
         return data
 
-    async def editUsuario(id, item):
+    async def editLivro(id, item):
 
-        await UsuariosRepository.getUsuarioById(id)
+        await LivrosRepository.getLivroById(id)
 
         item['id'] = id
         await DB.connection.connect()
-        query = UsuariosQueries.edit
+        query = LivrosQueries.edit
         values = [
             item
         ]
@@ -71,13 +58,13 @@ class UsuariosRepository:
 
         return item
 
-    async def deleteUsuario(id):
+    async def deleteLivro(id):
 
-        await UsuariosRepository.getUsuarioById(id)
+        await LivrosRepository.getLivroById(id)
 
         values = {'id': id}
         await DB.connection.connect()
-        query = UsuariosQueries.delete
+        query = LivrosQueries.delete
         await DB.connection.execute(query=query, values=values)
         await DB.connection.disconnect()
 

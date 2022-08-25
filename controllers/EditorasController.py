@@ -2,8 +2,7 @@ import sys
 
 sys.path.append('../')
 
-from env import DB
-from queries.EditorasQueries import EditorasQueries
+from services.EditorasService import EditorasService
 
 class EditorasController:
 
@@ -11,18 +10,53 @@ class EditorasController:
 
         try:
 
-            await DB.connection.connect()
-            query = EditorasQueries.getAll
-            rows = await DB.connection.fetch_all(query=query)
-            await DB.connection.disconnect()
-
-            if len(rows) == 0:
-                response = {"success":True, "message":"Data not found", "data":None}
-            else:
-                response = {"success":True, "message":"OK", "data":rows}
-            
-            return response
+            response = await EditorasService.getEditoras()
+            return { "success": True, "message":"OK", "data": response}
 
         except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
 
-            return { "success": False, "message":"Erro Interno", "data": None}
+    async def getEditoraById(id):
+
+        try:
+
+            response = await EditorasService.getEditoraById(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def addEditora(item):
+
+        try:
+
+            response = await EditorasService.addEditora(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def editEditora(id, item):
+
+        try:
+
+            response = await EditorasService.editEditora(id, item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def deleteEditora(id):
+
+        try:
+
+            response = await EditorasService.deleteEditora(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}

@@ -20,6 +20,14 @@ class UsuariosServices:
 
         #TRATAMENTOS AQUI
 
+        return 
+        
+    async def auth(item):
+
+        response = await UsuariosRepository.auth(item)
+
+        #TRATAMENTOS AQUI
+
         return response
 
     async def addUsuario(item):

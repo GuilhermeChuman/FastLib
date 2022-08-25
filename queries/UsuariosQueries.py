@@ -14,3 +14,5 @@ class UsuariosQueries:
 
     delete = "DELETE FROM Usuarios WHERE id = :id"
 
+    auth = "SELECT * FROM Usuarios WHERE login = :login AND password = :password"
+

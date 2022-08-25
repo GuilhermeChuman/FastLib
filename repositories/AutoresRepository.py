@@ -3,66 +3,53 @@ import sys
 sys.path.append('../')
 
 from env import DB
-from queries.UsuariosQueries import UsuariosQueries
+from queries.AutoresQueries import AutoresQueries
 
-class UsuariosRepository:
+class AutoresRepository:
 
-    async def getUsuarios():
+    async def getAutores():
 
         await DB.connection.connect()
-        query = UsuariosQueries.getAll
+        query = AutoresQueries.getAll
         rows = await DB.connection.fetch_all(query=query)
         await DB.connection.disconnect()
         
         return rows
 
-    async def getUsuarioById(id):
+    async def getAutorById(id):
 
         values = {'id': id}
         await DB.connection.connect()
-        query = UsuariosQueries.getById
+        query = AutoresQueries.getById
         rows = await DB.connection.fetch_one(query=query, values=values)
         await DB.connection.disconnect()
 
         if rows == None:
-            raise Exception("Usuário não encontrado")
+            raise Exception("Autor não encontrado")
 
         else:
             return rows
 
-    async def auth(item):
+    async def addAutor(item):
 
         await DB.connection.connect()
-        query = UsuariosQueries.auth
-        rows = await DB.connection.fetch_one(query=query, values=item)
-        await DB.connection.disconnect()
-
-        if rows == None:
-            raise Exception("Usuário ou Senha inválidos")
-
-        else:
-            return True
-
-    async def addUsuario(item):
-
-        await DB.connection.connect()
-        query = UsuariosQueries.add
+        query = AutoresQueries.add
         values = [
             item
         ]
         await DB.connection.execute_many(query=query, values=values)
-        data = await DB.last_inserted_id('Usuarios')
+        data = await DB.last_inserted_id('Autores')
         await DB.connection.disconnect()
 
         return data
 
-    async def editUsuario(id, item):
+    async def editAutor(id, item):
 
-        await UsuariosRepository.getUsuarioById(id)
+        await AutoresRepository.getAutorById(id)
 
         item['id'] = id
         await DB.connection.connect()
-        query = UsuariosQueries.edit
+        query = AutoresQueries.edit
         values = [
             item
         ]
@@ -71,13 +58,13 @@ class UsuariosRepository:
 
         return item
 
-    async def deleteUsuario(id):
+    async def deleteAutor(id):
 
-        await UsuariosRepository.getUsuarioById(id)
+        await AutoresRepository.getAutorById(id)
 
         values = {'id': id}
         await DB.connection.connect()
-        query = UsuariosQueries.delete
+        query = AutoresQueries.delete
         await DB.connection.execute(query=query, values=values)
         await DB.connection.disconnect()
 
