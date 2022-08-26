@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import RedirectResponse
 
 #Controllers
@@ -99,6 +99,10 @@ async def getGeneroById(id:int):
 @app.post("/addGenero", tags=["Gêneros"], summary="Adicionar um novo gêneros")
 async def addUsuario(item: GeneroRequests):
     return await GenerosController.addGenero(item.dict())
+
+@app.post("/generos/lot", tags=["Gêneros"], summary="Recebe  um grupo de gêneros via arquivo .csv")
+async def addGenerosLot(file: UploadFile):
+    return await GenerosController.addGeneroLot(file)
 
 @app.put("/editGenero/{id}", tags=["Gêneros"], summary="Editar um gênero")
 async def editGenero(id: int, item: GeneroRequests):

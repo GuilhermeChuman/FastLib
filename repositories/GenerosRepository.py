@@ -43,6 +43,17 @@ class GenerosRepository:
 
         return data
 
+    async def addGeneroLot(item):
+
+        await DB.connection.connect()
+        query = GenerosQueries.add
+        await DB.connection.execute_many(query=query, values=item)
+        data = []
+        data.append(await DB.last_inserted_id('Generos'))
+        await DB.connection.disconnect()
+
+        return data
+
     async def editGenero(id, item):
 
         await GenerosRepository.getGeneroById(id)

@@ -39,6 +39,17 @@ class GenerosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def addGeneroLot(item):
+
+        try:
+            
+            response = await GenerosService.addGeneroLot(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def editGenero(id, item):
 
         try:

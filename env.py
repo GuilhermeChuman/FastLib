@@ -1,4 +1,7 @@
 from databases import Database
+import codecs
+import csv
+from io import BytesIO
 
 class DB:
 
@@ -11,6 +14,17 @@ class DB:
 
     async def last_inserted_id(table):
         return await DB.connection.fetch_all("SELECT id FROM "+table+" ORDER BY id DESC LIMIT 1")
+
+class CsvReader:
+
+    async def readFile(file):
+
+        csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
+        data = []
+        for rows in csvReader:             
+            data.append(rows)  
+
+        return data
 
     # await database.connect()
 
