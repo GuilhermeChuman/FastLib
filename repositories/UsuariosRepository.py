@@ -41,7 +41,7 @@ class UsuariosRepository:
             raise Exception("Usuário ou Senha inválidos")
 
         else:
-            return True
+            return rows
 
     async def addUsuario(item):
 
