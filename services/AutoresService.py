@@ -2,6 +2,7 @@ import sys
 
 sys.path.append('../')
 
+from env import CsvReader
 from repositories.AutoresRepository import AutoresRepository
 
 class AutoresService:
@@ -28,6 +29,12 @@ class AutoresService:
 
         #TRATAMENTOS AQUI
 
+        return response
+
+    async def addAutoresLot(item):
+
+        data = await CsvReader.readFile(item) 
+        response = await AutoresRepository.addAutoresLot(data)
         return response
 
     async def editAutor(id, item):

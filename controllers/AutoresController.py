@@ -28,6 +28,17 @@ class AutoresController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def addAutoresLot(item):
+
+        try:
+            
+            response = await AutoresService.addAutoresLot(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def getAutorById(id):
 
         try:

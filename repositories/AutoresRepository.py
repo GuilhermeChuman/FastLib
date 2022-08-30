@@ -43,6 +43,17 @@ class AutoresRepository:
 
         return data
 
+    async def addAutoresLot(item):
+
+        await DB.connection.connect()
+        query = AutoresQueries.add
+        await DB.connection.execute_many(query=query, values=item)
+        data = []
+        data.append(await DB.last_inserted_id('Autores'))
+        await DB.connection.disconnect()
+
+        return data
+
     async def editAutor(id, item):
 
         await AutoresRepository.getAutorById(id)

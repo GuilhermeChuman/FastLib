@@ -109,7 +109,7 @@ async def getGeneroById(id:int):
 async def addUsuario(item: GeneroRequests):
     return await GenerosController.addGenero(item.dict())
 
-@app.post("/generos/lot", tags=["Gêneros"], summary="Recebe  um grupo de gêneros via arquivo .csv")
+@app.post("/addGeneros/lot", tags=["Gêneros"], summary="Recebe  um grupo de gêneros via arquivo .csv")
 async def addGenerosLot(file: UploadFile):
     return await GenerosController.addGeneroLot(file)
 
@@ -134,6 +134,10 @@ async def getAutorById(id:int):
 @app.post("/addAutor", tags=["Autores"], summary="Adicionar um novo autor")
 async def addUsuario(item: AutorRequests):
     return await AutoresController.addAutor(item.dict())
+
+@app.post("/addAutores/lot", tags=["Autores"], summary="Recebe  um grupo de autores via arquivo .csv")
+async def addGenerosLot(file: UploadFile):
+    return await AutoresController.addAutoresLot(file)
 
 @app.put("/editAutor/{id}", tags=["Autores"], summary="Editar um autor")
 async def editAutor(id: int, item: AutorRequests):
