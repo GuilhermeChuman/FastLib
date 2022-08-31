@@ -79,4 +79,4 @@ class EditorasRepository:
         await DB.connection.execute(query=query, values=values)
         await DB.connection.disconnect()
 
-        return None
+        return True
