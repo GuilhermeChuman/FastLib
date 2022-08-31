@@ -161,6 +161,10 @@ async def getEditoraById(id:int):
 async def addEditora(item: EditoraRequests):
     return await EditorasController.addEditora(item.dict())
 
+@app.post("/addEditoras/lot", tags=["Editoras"], summary="Recebe  um grupo de editoras via arquivo .csv")
+async def addEditorasLot(file: UploadFile):
+    return await EditorasController.addEditorasLot(file)
+
 @app.put("/editEditora/{id}", tags=["Editoras"], summary="Editar uma editora")
 async def editEditora(id: int, item: EditoraRequests):
     return await EditorasController.editEditora(id, item.dict())

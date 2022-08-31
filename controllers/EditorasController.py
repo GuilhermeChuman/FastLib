@@ -39,6 +39,17 @@ class EditorasController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def addEditorasLot(item):
+
+        try:
+            
+            response = await EditorasService.addEditorasLot(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def editEditora(id, item):
 
         try:

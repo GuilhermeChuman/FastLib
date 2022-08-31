@@ -43,6 +43,17 @@ class EditorasRepository:
 
         return data
 
+    async def addEditorasLot(item):
+
+        await DB.connection.connect()
+        query = EditorasQueries.add
+        await DB.connection.execute_many(query=query, values=item)
+        data = []
+        data.append(await DB.last_inserted_id('Editoras'))
+        await DB.connection.disconnect()
+
+        return data
+
     async def editEditora(id, item):
 
         await EditorasRepository.getEditoraById(id)

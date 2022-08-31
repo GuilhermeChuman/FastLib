@@ -2,6 +2,7 @@ import sys
 
 sys.path.append('../')
 
+from env import CsvReader
 from repositories.EditorasRepository import EditorasRepository
 
 class EditorasService:
@@ -28,6 +29,12 @@ class EditorasService:
 
         #TRATAMENTOS AQUI
 
+        return response
+
+    async def addEditorasLot(item):
+
+        data = await CsvReader.readFile(item) 
+        response = await EditorasRepository.addEditorasLot(data)
         return response
 
     async def editEditora(id, item):
