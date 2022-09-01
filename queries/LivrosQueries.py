@@ -5,6 +5,10 @@ class LivrosQueries:
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
     getAll += "ORDER BY titulo"
 
+    getAutoresByLivro = " SELECT autores.nome as 'Autor', trabalhos.idLivro from autores "
+    getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
+    getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
+
     add = "INSERT INTO Livros(isbn, titulo, descricao, volume, palavraChave1, "
     add += "palavraChave2, palavraChave3, ano, edicao, idEditora, idGenero) "
     add += "VALUES (:isbn, :titulo, :descricao, :volume, :palavraChave1, :palavraChave2, "

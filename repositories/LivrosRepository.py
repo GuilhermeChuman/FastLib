@@ -11,8 +11,13 @@ class LivrosRepository:
 
         query = LivrosQueries.getAll
         rows = await DB.connection.fetch_all(query=query)
-        
-        return rows
+        response = []
+        for i in rows:
+            queryAutor = LivrosQueries.getAutoresByLivro
+            autores = await DB.connection.fetch_all(query=queryAutor, values={'id':i['id']})
+            response.append({'livro': i, 'autores': autores})
+                
+        return response
 
     async def getLivroById(id):
 
