@@ -1,8 +1,9 @@
 class LivrosQueries:
     
-    getAll = "SELECT Editoras.nome, Generos.nome, Livros.* FROM Editoras "
-    getAll += "INNER JOIN Livros ON(Livros.idEditora = Editoras.id) "
-    getAll += "INNER JOIN Generos ON(Livros.idGenero = Generos.id)"
+    getAll = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
+    getAll += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
+    getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    getAll += "ORDER BY titulo"
 
     add = "INSERT INTO Livros(isbn, titulo, descricao, volume, palavraChave1, "
     add += "palavraChave2, palavraChave3, ano, edicao, idEditora, idGenero) "
