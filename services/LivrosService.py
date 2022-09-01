@@ -2,6 +2,7 @@ import sys
 
 sys.path.append('../')
 
+from env import CsvReader
 from repositories.LivrosRepository import LivrosRepository
 
 class LivrosService:
@@ -39,6 +40,12 @@ class LivrosService:
 
         #TRATAMENTOS AQUI
 
+        return response
+
+    async def addLivrosLot(item):
+
+        data = await CsvReader.readFile(item) 
+        response = await LivrosRepository.addLivrosLot(data)
         return response
 
     async def editLivro(id, item):

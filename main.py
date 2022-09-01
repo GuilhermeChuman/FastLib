@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
+from env import DB
 
 #Controllers
 from controllers.GenerosController import GenerosController
@@ -62,6 +63,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event("startup")
+async def startup():
+    await DB.connection.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await DB.connection.disconnect()
 
 @app.get("/")
 async def standard():
@@ -186,6 +195,10 @@ async def getLivroById(id:int):
 @app.post("/livros/", tags=["Livros"], summary="Listar livros através de filtro")
 async def filterLivros(item: FilterRequests):
     return await LivrosController.filterLivros(item.dict())
+
+@app.post("/addLivros/lot", tags=["Livros"], summary="Recebe  um grupo de livros via arquivo .csv")
+async def addLivrosLot(file: UploadFile):
+    return await LivrosController.addLivrosLot(file)
 
 @app.post("/addLivro", tags=["Livros"], summary="Adicionar um novo Livro")
 async def addLivro(item: LivroRequests):

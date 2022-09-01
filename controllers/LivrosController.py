@@ -51,6 +51,17 @@ class LivrosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def addLivrosLot(item):
+
+        try:
+            
+            response = await LivrosService.addLivrosLot(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def editLivro(id, item):
 
         try:

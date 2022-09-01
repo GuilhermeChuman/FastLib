@@ -9,20 +9,16 @@ class LivrosRepository:
 
     async def getLivros():
 
-        await DB.connection.connect()
         query = LivrosQueries.getAll
         rows = await DB.connection.fetch_all(query=query)
-        await DB.connection.disconnect()
         
         return rows
 
     async def getLivroById(id):
 
         values = {'id': id}
-        await DB.connection.connect()
         query = LivrosQueries.getById
         rows = await DB.connection.fetch_one(query=query, values=values)
-        await DB.connection.disconnect()
 
         if rows == None:
             raise Exception("Livro não encontrada")
@@ -32,14 +28,21 @@ class LivrosRepository:
 
     async def addLivro(item):
 
-        await DB.connection.connect()
         query = LivrosQueries.add
         values = [
             item
         ]
         await DB.connection.execute_many(query=query, values=values)
         data = await DB.last_inserted_id('Livros')
-        await DB.connection.disconnect()
+
+        return data
+
+    async def addLivrosLot(item):
+
+        query = LivrosQueries.add
+        await DB.connection.execute_many(query=query, values=item)
+        data = []
+        data.append(await DB.last_inserted_id('Livros'))
 
         return data
 
@@ -48,13 +51,11 @@ class LivrosRepository:
         await LivrosRepository.getLivroById(id)
 
         item['id'] = id
-        await DB.connection.connect()
         query = LivrosQueries.edit
         values = [
             item
         ]
         await DB.connection.execute_many(query=query, values=values)
-        await DB.connection.disconnect()
 
         return item
 
@@ -63,9 +64,7 @@ class LivrosRepository:
         await LivrosRepository.getLivroById(id)
 
         values = {'id': id}
-        await DB.connection.connect()
         query = LivrosQueries.delete
         await DB.connection.execute(query=query, values=values)
-        await DB.connection.disconnect()
 
         return True

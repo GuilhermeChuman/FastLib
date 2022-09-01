@@ -21,18 +21,9 @@ class CsvReader:
 
         csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
         data = []
-        for rows in csvReader:             
-            data.append(rows)  
+        for rows in csvReader: 
+            dct = { k: None if not v else v for k, v in rows.items() }
+            data.append(dct)  
 
         return data
 
-    # await database.connect()
-
-    #DEPENDENCIES
-    # $ pip install aiomysql
-    # $ pip install databases
-    # $ pip install uvicorn
-    # $ pip install fastapi
-
-    #HOW TO RUN 
-    # python -m uvicorn main:app --reload 
