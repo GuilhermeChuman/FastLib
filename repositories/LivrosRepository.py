@@ -80,7 +80,7 @@ class LivrosRepository:
         rows = await DB.connection.fetch_one(query=query, values=values)
 
         if rows == None:
-            raise Exception("Livro não encontrada")
+            raise Exception("Livro não encontrado")
 
         else:
             return rows
