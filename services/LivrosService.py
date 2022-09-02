@@ -23,6 +23,18 @@ class LivrosService:
 
         return response
 
+    async def addTrabalho(item):
+
+        response = await LivrosRepository.addTrabalho(item)
+
+        return response
+
+    async def removeTrabalho(id):
+
+        response = await LivrosRepository.removeTrabalho(id)
+
+        return response
+
     async def filterLivros(item):
 
         response = await LivrosRepository.getLivros()

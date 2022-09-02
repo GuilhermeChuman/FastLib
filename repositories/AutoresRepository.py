@@ -14,6 +14,13 @@ class AutoresRepository:
         
         return rows
 
+    async def autoresByLivro(id):
+
+        query = AutoresQueries.getAutoresByLivro
+        rows = await DB.connection.fetch_all(query=query, values={"id": id})
+
+        return rows
+
     async def getAutorById(id):
 
         values = {'id': id}

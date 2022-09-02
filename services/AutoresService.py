@@ -15,6 +15,12 @@ class AutoresService:
 
         return response
 
+    async def autoresByLivro(id):
+
+        response = await AutoresRepository.autoresByLivro(id)
+
+        return response
+
     async def getAutorById(id):
 
         response = await AutoresRepository.getAutorById(id)

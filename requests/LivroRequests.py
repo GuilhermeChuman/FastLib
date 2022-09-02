@@ -15,6 +15,10 @@ class LivroRequests(BaseModel):
     idEditora: int
     idGenero: int
 
+class TrabalhoRequests(BaseModel):
+    idAutor: int
+    idLivro: int
+
 class FilterRequests(BaseModel):
     titulo: Union[str, None] = None
     descricao: Union[str, None] = None

@@ -17,6 +17,17 @@ class AutoresController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def autoresByLivro(id):
+
+        try:
+            
+            response = await AutoresService.autoresByLivro(id)
+            return { "success": True, "message":"OK", "data":response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
     async def addAutor(item):
 
         try:

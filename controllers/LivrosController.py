@@ -17,6 +17,28 @@ class LivrosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def addTrabalho(item):
+
+        try:
+
+            response = await LivrosService.addTrabalho(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
+    async def removeTrabalho(id):
+
+        try:
+
+            response = await LivrosService.removeTrabalho(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
     async def getLivroById(id):
 
         try:

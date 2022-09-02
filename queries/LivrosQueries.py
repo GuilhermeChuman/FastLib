@@ -5,7 +5,7 @@ class LivrosQueries:
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
     getAll += "ORDER BY titulo"
 
-    getAutoresByLivro = " SELECT autores.nome as 'Autor', trabalhos.idLivro from autores "
+    getAutoresByLivro = " SELECT trabalhos.id, autores.nome as 'autor' from autores "
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
 
@@ -13,4 +13,12 @@ class LivrosQueries:
     add += "palavraChave2, palavraChave3, ano, edicao, idEditora, idGenero) "
     add += "VALUES (:isbn, :titulo, :descricao, :volume, :palavraChave1, :palavraChave2, "
     add += ":palavraChave3, :ano, :edicao, :idEditora, :idGenero)"
+
+    addTrabalho = "INSERT INTO Trabalhos(idAutor, idLivro) "
+    addTrabalho += "VALUES (:idAutor, :idLivro)"
+
+    getTrabalhoById = " SELECT * FROM Trabalhos WHERE id = :id"
+
+    removeTrabalho = " DELETE FROM Trabalhos WHERE id = :id"
+
     

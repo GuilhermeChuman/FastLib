@@ -22,6 +22,7 @@ from requests.LogRequests import LogRequests
 
 from requests.LivroRequests import LivroRequests
 from requests.LivroRequests import FilterRequests
+from requests.LivroRequests import TrabalhoRequests
 
 tags_metadata = [
     {
@@ -140,6 +141,10 @@ async def getAutores():
 async def getAutorById(id:int):
     return await AutoresController.getAutorById(id)
 
+@app.get("/autoresByLivro/{id}", tags=["Autores"], summary="Listar autores por livro")
+async def autoresByLivro(id:int):
+    return await AutoresController.autoresByLivro(id)
+
 @app.post("/addAutor", tags=["Autores"], summary="Adicionar um novo autor")
 async def addUsuario(item: AutorRequests):
     return await AutoresController.addAutor(item.dict())
@@ -191,6 +196,14 @@ async def getLivros():
 @app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
 async def getLivroById(id:int):
     return await LivrosController.getLivroById(id)
+
+@app.post("/addTrabalho", tags=["Livros"], summary="Adicionar um novo Autor à um livro existente")
+async def addTrabalho(item: TrabalhoRequests):
+    return await LivrosController.addTrabalho(item.dict())
+
+@app.delete("/removeTrabalho/{id}", tags=["Livros"], summary="Remove um Autor de um livro existente")
+async def removeTrabalho(id: int):
+    return await LivrosController.removeTrabalho(id)
 
 @app.post("/livros/", tags=["Livros"], summary="Listar livros através de filtro")
 async def filterLivros(item: FilterRequests):
