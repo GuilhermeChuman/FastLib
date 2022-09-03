@@ -79,11 +79,32 @@ class LivrosRepository:
         query = LivrosQueries.getById
         rows = await DB.connection.fetch_one(query=query, values=values)
 
+        queryAutor = LivrosQueries.getAutoresByLivro
+        autores = await DB.connection.fetch_all(query=queryAutor, values={'id':id})
+        
+        obj = {}
+
+        obj['id']               = rows['id']
+        obj['isbn']             = rows['isbn']
+        obj['titulo']           = rows['titulo']
+        obj['descricao']        = rows['descricao']
+        obj['volume']           = rows['volume']
+        obj['palavraChave1']    = rows['palavraChave1']
+        obj['palavraChave2']    = rows['palavraChave2']
+        obj['palavraChave3']    = rows['palavraChave3']
+        obj['ano']              = rows['ano']
+        obj['edicao']           = rows['edicao']
+        obj['idEditora']        = rows['idEditora']
+        obj['editora']          = rows['editora']
+        obj['idGenero']         = rows['idGenero']
+        obj['genero']           = rows['genero']
+        obj['autores']          = autores
+            
         if rows == None:
             raise Exception("Livro não encontrada")
 
         else:
-            return rows
+            return obj
 
     async def addLivro(item):
 

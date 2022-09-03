@@ -5,6 +5,11 @@ class LivrosQueries:
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
     getAll += "ORDER BY titulo"
 
+    getById = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
+    getById += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
+    getById += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    getById += "WHERE Livros.id = :id"
+
     getAutoresByLivro = " SELECT trabalhos.id, autores.nome as 'autor' from autores "
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
