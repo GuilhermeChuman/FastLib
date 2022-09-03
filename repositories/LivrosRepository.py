@@ -101,7 +101,7 @@ class LivrosRepository:
         obj['autores']          = autores
             
         if rows == None:
-            raise Exception("Livro não encontrada")
+            raise Exception("Livro não encontrado")
 
         else:
             return obj

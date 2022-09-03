@@ -13,7 +13,7 @@ class DB:
     connection = Database(DATABASE_URL)
 
     async def last_inserted_id(table):
-        return await DB.connection.fetch_all("SELECT id FROM "+table+" ORDER BY id DESC LIMIT 1")
+        return await DB.connection.fetch_one("SELECT id FROM "+table+" ORDER BY id DESC LIMIT 1")
 
 class CsvReader:
 

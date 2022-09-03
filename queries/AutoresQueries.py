@@ -1,6 +1,6 @@
 class AutoresQueries:
     
-    getAll = "SELECT * FROM Autores"
+    getAll = "SELECT * FROM Autores ORDER BY Autores.nome"
 
     getById = "SELECT * FROM Autores WHERE id = :id"
 
