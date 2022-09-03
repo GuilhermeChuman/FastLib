@@ -5,13 +5,8 @@ from typing import Union
 class LivroRequests(BaseModel):
     isbn: Union[str, None] = None
     titulo: str
-<<<<<<< HEAD
     descricao:  Union[str, None] = None
     volume:  Union[str, None] = None
-=======
-    descricao: Union[str, None] = None
-    volume: Union[str, None] = None
->>>>>>> ff6e887208728304db43088da0f62ca523a44bba
     palavraChave1: Union[str, None] = None
     palavraChave2: Union[str, None] = None
     palavraChave3: Union[str, None] = None
