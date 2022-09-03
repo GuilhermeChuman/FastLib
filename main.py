@@ -10,6 +10,7 @@ from controllers.AutoresController import AutoresController
 from controllers.UsuariosController import UsuariosController
 from controllers.LivrosController import LivrosController
 from controllers.LogsController import LogsController
+from controllers.EmprestimosController import EmprestimosController
 
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
@@ -23,6 +24,8 @@ from requests.LogRequests import LogRequests
 from requests.LivroRequests import LivroRequests
 from requests.LivroRequests import FilterRequests
 from requests.LivroRequests import TrabalhoRequests
+
+from requests.EmprestimosRequests import EmprestimosRequests
 
 tags_metadata = [
     {
@@ -51,6 +54,10 @@ tags_metadata = [
     },
     {
         "name": "Livros",
+        "description": "Rotas relacionadas à listagem e manutenção de livros.",
+    },
+        {
+        "name": "Emprestimos",
         "description": "Rotas relacionadas à listagem e manutenção de livros.",
     },
 ]
@@ -82,6 +89,16 @@ async def standard():
 @app.post("/auth", tags=["Auth"], summary="")
 async def autenticate(item: AuthRequests):
     return await UsuariosController.auth(item.dict())
+
+###################################  Empréstimos  #####################################
+
+@app.get("/emprestimo", tags=["Emprestimos"], summary="")
+async def getEmprestimos():
+    return await EmprestimosController.getEmprestimos()
+
+@app.post("/emprestimo", tags=["Emprestimos"], summary="")
+async def addEmprestimos(item: EmprestimosRequests):
+    return await EmprestimosController.addEmprestimos(item.dict())
 
 ###################################  Usuarios  ########################################
 
