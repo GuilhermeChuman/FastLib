@@ -10,3 +10,10 @@
 
 <h2>HOW TO RUN </h2>
  <p> $ python3 -m uvicorn main:app --reload </p>
+
+
+ - livros na lista do usuário
+- tiutlo
+- keyworld
+- autor
+- genero
