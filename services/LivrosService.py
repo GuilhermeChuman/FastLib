@@ -1,4 +1,5 @@
 import sys
+import pandas as pd
 
 sys.path.append('../')
 
@@ -38,13 +39,17 @@ class LivrosService:
     async def filterLivros(item):
 
         response = await LivrosRepository.getLivros()
+            
+        df = pd.DataFrame(response)
+        df = df.fillna('')
 
-        expectedResult = [d for d in response if d['titulo'] in item['titulo']]
-    
-        if(len(expectedResult) == 0):
-            raise Exception("Livro não encontrado")
+        arrayTitulo = df.query("titulo.str.contains('"+item['titulo']+"', na=False, case=False)")
 
-        return expectedResult
+        arrayTitulo = arrayTitulo.to_dict('index')
+
+        response = [value for value in arrayTitulo.values()]
+
+        return response
 
     async def addLivro(item):
 
