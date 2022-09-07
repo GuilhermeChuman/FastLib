@@ -72,6 +72,15 @@ class LivrosRepository:
 
         return True
 
+    async def getLivrosOnList(id):
+
+        values = {'id': id}
+        query = LivrosQueries.getLivrosOnList
+        print(query)
+        response = await DB.connection.fetch_all(query=query, values=values)
+
+        return response
+
 
     async def getLivroById(id):
 

@@ -51,11 +51,11 @@ class LivrosController:
             return { "success": False, "message":str(e), "data": None}
 
 
-    async def filterLivros(item):
+    async def filterLivros(item, id):
         
         try:
 
-            response = await LivrosService.filterLivros(item)
+            response = await LivrosService.filterLivros(item, id)
             return { "success": True, "message":"OK", "data": response}
 
         except Exception as e:

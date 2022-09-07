@@ -36,20 +36,30 @@ class LivrosService:
 
         return response
 
-    async def filterLivros(item):
+    async def filterLivros(item, id):
 
-        response = await LivrosRepository.getLivros()
+        responsePrimary = await LivrosRepository.getLivros()
             
-        df = pd.DataFrame(response)
+        df = pd.DataFrame(responsePrimary)
         df = df.fillna('')
 
-        arrayTitulo = df.query("titulo.str.contains('"+item['titulo']+"', na=False, case=False)")
+        response = []
+        finalResponse = []
 
-        arrayTitulo = arrayTitulo.to_dict('index')
+        for x, y in item.items():
+            if(y != None):
+                arrayTitulo = df.query(x+".str.contains('"+y+"', na=False, case=False)")
+                arrayTitulo = arrayTitulo.to_dict('index')
+                response.append([value for value in arrayTitulo.values()])
 
-        response = [value for value in arrayTitulo.values()]
+        response.append(await LivrosRepository.getLivrosOnList(id))
 
-        return response
+        finalResponse = list({v['id']:v for v in response}.values())
+        
+        if len(finalResponse) == 0:
+            return responsePrimary
+
+        return finalResponse
 
     async def addLivro(item):
 

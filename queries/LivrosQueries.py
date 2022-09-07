@@ -14,6 +14,12 @@ class LivrosQueries:
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
 
+    getLivrosOnList =  "SELECT Livros.*, Status.nome as 'status'  FROM Livros "
+    getLivrosOnList += "LEFT JOIN Lista_Livros ON(Livros.id = Lista_Livros.idLivro) "
+    getLivrosOnList += "INNER JOIN Listas ON(Lista_Livros.idLista = Listas.id) "
+    getLivrosOnList += "INNER JOIN Status ON(Lista_Livros.idStatus = Status.id) "
+    getLivrosOnList += "WHERE Listas.idUsuario = :id"
+
     add = "INSERT INTO Livros(isbn, titulo, descricao, volume, palavraChave1, "
     add += "palavraChave2, palavraChave3, ano, edicao, idEditora, idGenero) "
     add += "VALUES (:isbn, :titulo, :descricao, :volume, :palavraChave1, :palavraChave2, "

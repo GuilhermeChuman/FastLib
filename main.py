@@ -222,9 +222,9 @@ async def addTrabalho(item: TrabalhoRequests):
 async def removeTrabalho(id: int):
     return await LivrosController.removeTrabalho(id)
 
-@app.post("/livros/", tags=["Livros"], summary="Listar livros através de filtro")
-async def filterLivros(item: FilterRequests):
-    return await LivrosController.filterLivros(item.dict())
+@app.post("/livros/{id}", tags=["Livros"], summary="Listar livros através de filtro")
+async def filterLivros(item: FilterRequests, id: int):
+    return await LivrosController.filterLivros(item.dict(), id)
 
 @app.post("/addLivros/lot", tags=["Livros"], summary="Recebe  um grupo de livros via arquivo .csv")
 async def addLivrosLot(file: UploadFile):
