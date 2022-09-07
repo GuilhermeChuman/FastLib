@@ -62,6 +62,54 @@ class LivrosRepository:
         else:
             return rows
 
+    async def solicitarEmprestimo(item):
+
+        values = item
+        query = LivrosQueries.solicitarEmprestimo
+        await DB.connection.execute(query=query, values=values)
+
+        return True
+
+    async def aprovarEmprestimo(id):
+
+        await LivrosRepository.findEmprestimoById(id)
+
+        values = {'id': id}
+        query = LivrosQueries.aprovarEmprestimo
+        await DB.connection.execute(query=query, values=values)
+
+        return True
+
+    async def emprestar(item):
+
+        values = item
+        query = LivrosQueries.emprestar
+        await DB.connection.execute(query=query, values=values)
+
+        return True
+
+    async def devolverLivro(id):
+
+        await LivrosRepository.findEmprestimoById(id)
+
+        values = {'id': id}
+        query = LivrosQueries.devolverLivro
+        await DB.connection.execute(query=query, values=values)
+
+        return True
+
+    async def findEmprestimoById(id):
+
+        values = {'id': id}
+        query = LivrosQueries.getEmprestimoById
+        rows = await DB.connection.fetch_one(query=query, values=values)
+
+        if rows == None:
+            raise Exception("Emprestimo não encontrado")
+
+        else:
+            return rows
+
     async def removeTrabalho(id):
 
         await LivrosRepository.getTrabalhoById(id)

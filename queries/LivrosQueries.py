@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class LivrosQueries:
     
     getAll = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
@@ -13,6 +15,23 @@ class LivrosQueries:
     getAutoresByLivro = " SELECT trabalhos.id, autores.nome as 'autor' from autores "
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
+
+    solicitarEmprestimo = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, situacao) "
+    solicitarEmprestimo += "VALUES (:idUsuario, :idLivro, :dataEmprestimo, 'S') "
+
+    emprestar = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, situacao) "
+    emprestar += "VALUES (:idUsuario, :idLivro, :dataEmprestimo, 'E') "
+
+    aprovarEmprestimo = " UPDATE Emprestimos "
+    aprovarEmprestimo += "SET situacao = 'E', dataEmprestimo = '"+datetime.today().strftime('%Y-%m-%d')+"' "
+    aprovarEmprestimo += "WHERE Emprestimos.id = :id"
+
+    getEmprestimoById = " SELECT * FROM Emprestimos "
+    getEmprestimoById += "WHERE Emprestimos.id = :id"
+
+    devolverLivro = " UPDATE Emprestimos "
+    devolverLivro += "SET situacao = 'D' "
+    devolverLivro += "WHERE Emprestimos.id = :id"
 
     getLivrosOnList =  "SELECT Livros.*, Status.nome as 'status'  FROM Livros "
     getLivrosOnList += "LEFT JOIN Lista_Livros ON(Livros.id = Lista_Livros.idLivro) "

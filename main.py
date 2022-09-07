@@ -24,6 +24,7 @@ from requests.LogRequests import LogRequests
 from requests.LivroRequests import LivroRequests
 from requests.LivroRequests import FilterRequests
 from requests.LivroRequests import TrabalhoRequests
+from requests.LivroRequests import SolicitarEmprestimoRequests
 
 from requests.EmprestimosRequests import EmprestimosRequests
 
@@ -213,6 +214,10 @@ async def getLivros():
 @app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
 async def getLivroById(id:int):
     return await LivrosController.getLivroById(id)
+
+@app.get("/solicitarEmprestimo", tags=["Livros"], summary="Emprestar livro por ID")
+async def solicitarEmprestimo(item:SolicitarEmprestimoRequests):
+    return await LivrosController.solicitarEmprestimo(item.dict())
 
 @app.post("/addTrabalho", tags=["Livros"], summary="Adicionar um novo Autor à um livro existente")
 async def addTrabalho(item: TrabalhoRequests):

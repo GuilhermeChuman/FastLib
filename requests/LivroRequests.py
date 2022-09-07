@@ -19,6 +19,11 @@ class TrabalhoRequests(BaseModel):
     idAutor: int
     idLivro: int
 
+class SolicitarEmprestimoRequests(BaseModel):
+    idUsuario: int
+    idLivro: int
+    dataEmprestimo: date
+
 class FilterRequests(BaseModel):
     titulo: Union[str, None] = None
     descricao: Union[str, None] = None

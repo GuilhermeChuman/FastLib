@@ -24,6 +24,14 @@ class LivrosService:
 
         return response
 
+    async def solicitarEmprestimo(item):
+
+        response = await LivrosRepository.solicitarEmprestimo(item)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
     async def addTrabalho(item):
 
         response = await LivrosRepository.addTrabalho(item)
