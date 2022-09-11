@@ -30,4 +30,4 @@ class FilterRequests(BaseModel):
     palavraChave1: Union[str, None] = None
     palavraChave2: Union[str, None] = None
     palavraChave3: Union[str, None] = None
-    autor: Union[str, None] = None
+    autores: Union[str, None] = None

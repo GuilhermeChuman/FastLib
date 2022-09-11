@@ -72,7 +72,10 @@ class LivrosRepository:
 
     async def aprovarEmprestimo(id):
 
-        await LivrosRepository.findEmprestimoById(id)
+        emprestimo = await LivrosRepository.findEmprestimoById(id)
+
+        if(await LivrosRepository.verifyEmprestimoLivro(emprestimo['idLivro'])):
+            raise Exception('O livro já está emprestado!')
 
         values = {'id': id}
         query = LivrosQueries.aprovarEmprestimo
@@ -97,6 +100,17 @@ class LivrosRepository:
         await DB.connection.execute(query=query, values=values)
 
         return True
+
+    async def verifyEmprestimoLivro(id):
+
+        values = {'id': id}
+        query = LivrosQueries.verifyEmprestimoLivro
+        rows = await DB.connection.fetch_one(query=query, values=values)
+
+        if rows == None:
+            return False
+        else:
+            return True
 
     async def findEmprestimoById(id):
 

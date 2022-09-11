@@ -59,7 +59,7 @@ tags_metadata = [
     },
         {
         "name": "Emprestimos",
-        "description": "Rotas relacionadas à listagem e manutenção de livros.",
+        "description": "Rotas relacionadas à empréstimo de livros.",
     },
 ]
 
@@ -205,6 +205,28 @@ async def editEditora(id: int, item: EditoraRequests):
 async def deleteEditora(id: int):
     return await EditorasController.deleteEditora(id)
 
+###############################    Emprestimos    ##########################################
+
+@app.post("/solicitarEmprestimo", tags=["Emprestimos"], summary="Solicitar emprestimo de um livro")
+async def solicitarEmprestimo(item:SolicitarEmprestimoRequests):
+    return await LivrosController.solicitarEmprestimo(item.dict())
+
+@app.get("/aprovarEmprestimo/{id}", tags=["Emprestimos"], summary="Emprestar livro por ID")
+async def aprovarEmprestimo(id:int):
+    return await LivrosController.aprovarEmprestimo(id)
+
+@app.post("/emprestar", tags=["Emprestimos"], summary="Emprestar livro")
+async def emprestar(item:SolicitarEmprestimoRequests):
+    return await LivrosController.emprestar(item.dict())
+
+@app.get("/devolverLivro/{id}", tags=["Emprestimos"], summary="Efetua a devolução de um livro")
+async def devolverLivro(id:int):
+    return await LivrosController.devolverLivro(id)
+
+@app.get("/verifyEmprestimoLivro/{id}", tags=["Emprestimos"], summary="Verifica se o livro está emprestado")
+async def verifyEmprestimoLivro(id:int):
+    return await LivrosController.verifyEmprestimoLivro(id)
+
 ###############################    Livros    ##########################################
 
 @app.get("/livros", tags=["Livros"], summary="Listar todos os livros")
@@ -214,10 +236,6 @@ async def getLivros():
 @app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
 async def getLivroById(id:int):
     return await LivrosController.getLivroById(id)
-
-@app.get("/solicitarEmprestimo", tags=["Livros"], summary="Emprestar livro por ID")
-async def solicitarEmprestimo(item:SolicitarEmprestimoRequests):
-    return await LivrosController.solicitarEmprestimo(item.dict())
 
 @app.post("/addTrabalho", tags=["Livros"], summary="Adicionar um novo Autor à um livro existente")
 async def addTrabalho(item: TrabalhoRequests):

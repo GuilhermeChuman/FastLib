@@ -1,4 +1,5 @@
 import sys
+from urllib import response
 
 sys.path.append('../')
 
@@ -38,6 +39,51 @@ class LivrosController:
         except Exception as e:
 
             return { "success": False, "message":str(e), "data": None}
+
+    async def aprovarEmprestimo(id):
+
+        try:
+
+            response = await LivrosService.aprovarEmprestimo(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
+    async def emprestar(item):
+
+        try:
+
+            response = await LivrosService.emprestar(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
+    async def devolverLivro(id):
+
+        try:
+
+            response = await LivrosService.devolverLivro(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
+    async def verifyEmprestimoLivro(id):
+
+        try:
+
+            response = await LivrosService.verifyEmprestimoLivro(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
 
     async def removeTrabalho(id):
 

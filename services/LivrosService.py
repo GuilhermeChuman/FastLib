@@ -1,5 +1,7 @@
 import sys
 import pandas as pd
+import ast
+
 
 sys.path.append('../')
 
@@ -32,6 +34,40 @@ class LivrosService:
 
         return response
 
+    async def aprovarEmprestimo(id):
+
+        response = await LivrosRepository.aprovarEmprestimo(id)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
+    async def emprestar(item):
+
+        response = await LivrosRepository.emprestar(item)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
+    async def devolverLivro(id):
+
+        response = await LivrosRepository.devolverLivro(id)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
+        
+    async def verifyEmprestimoLivro(id):
+
+        response = await LivrosRepository.verifyEmprestimoLivro(id)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
+
     async def addTrabalho(item):
 
         response = await LivrosRepository.addTrabalho(item)
@@ -62,7 +98,7 @@ class LivrosService:
 
         response.append(await LivrosRepository.getLivrosOnList(id))
 
-        finalResponse = list({v['id']:v for v in response}.values())
+        finalResponse = [ast.literal_eval(el1) for el1 in set([str(el2) for el2 in response])]
         
         if len(finalResponse) == 0:
             return responsePrimary

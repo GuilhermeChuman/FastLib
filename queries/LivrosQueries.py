@@ -29,6 +29,9 @@ class LivrosQueries:
     getEmprestimoById = " SELECT * FROM Emprestimos "
     getEmprestimoById += "WHERE Emprestimos.id = :id"
 
+    verifyEmprestimoLivro = " SELECT * FROM Emprestimos "
+    verifyEmprestimoLivro += "WHERE Emprestimos.idLivro = :id AND Emprestimos.situacao = 'E'"
+
     devolverLivro = " UPDATE Emprestimos "
     devolverLivro += "SET situacao = 'D' "
     devolverLivro += "WHERE Emprestimos.id = :id"
