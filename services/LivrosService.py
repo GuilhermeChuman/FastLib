@@ -99,6 +99,8 @@ class LivrosService:
         response.append(await LivrosRepository.getLivrosOnList(id))
 
         finalResponse = [ast.literal_eval(el1) for el1 in set([str(el2) for el2 in response])]
+
+        finalResponse = finalResponse.pop()
         
         if len(finalResponse) == 0:
             return responsePrimary
