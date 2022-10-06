@@ -98,12 +98,17 @@ class LivrosService:
 
         response.append(await LivrosRepository.getLivrosOnList(id))
 
-        finalResponse = [ast.literal_eval(el1) for el1 in set([str(el2) for el2 in response])]
-        
-        if len(finalResponse) == 0:
+        if len(response) == 0:
             return responsePrimary
 
-        return finalResponse
+        return response
+
+        # finalResponse = [ast.literal_eval(el1) for el1 in set([str(el2) for el2 in response])]
+        
+        # if len(finalResponse) == 0:
+        #     return responsePrimary
+
+        # return finalResponse
 
     async def addLivro(item):
 
