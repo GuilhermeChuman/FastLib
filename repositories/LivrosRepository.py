@@ -112,6 +112,17 @@ class LivrosRepository:
         else:
             return True
 
+    async def verifySolicitacaoLivro(idUsuario, idLivro):
+
+        values = {'idUsuario': idUsuario, 'idLivro': idLivro}
+        query = LivrosQueries.verifySolicitacaoLivro
+        rows = await DB.connection.fetch_one(query=query, values=values)
+
+        if rows == None:
+            return False
+        else:
+            return True
+
     async def findEmprestimoById(id):
 
         values = {'id': id}

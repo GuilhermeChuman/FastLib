@@ -16,24 +16,28 @@ class LivrosQueries:
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
 
-    solicitarEmprestimo = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, situacao) "
+    solicitarEmprestimo = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, estado) "
     solicitarEmprestimo += "VALUES (:idUsuario, :idLivro, :dataEmprestimo, 'S') "
 
-    emprestar = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, situacao) "
+    emprestar = " INSERT INTO emprestimos(idUsuario, idLivro, dataEmprestimo, estado) "
     emprestar += "VALUES (:idUsuario, :idLivro, :dataEmprestimo, 'E') "
 
     aprovarEmprestimo = " UPDATE Emprestimos "
-    aprovarEmprestimo += "SET situacao = 'E', dataEmprestimo = '"+datetime.today().strftime('%Y-%m-%d')+"' "
+    aprovarEmprestimo += "SET estado = 'E', dataEmprestimo = '"+datetime.today().strftime('%Y-%m-%d')+"' "
     aprovarEmprestimo += "WHERE Emprestimos.id = :id"
 
     getEmprestimoById = " SELECT * FROM Emprestimos "
     getEmprestimoById += "WHERE Emprestimos.id = :id"
 
     verifyEmprestimoLivro = " SELECT * FROM Emprestimos "
-    verifyEmprestimoLivro += "WHERE Emprestimos.idLivro = :id AND Emprestimos.situacao = 'E'"
+    verifyEmprestimoLivro += "WHERE Emprestimos.idLivro = :id AND Emprestimos.estado = 'E'"
+
+    verifySolicitacaoLivro = " SELECT * FROM Emprestimos "
+    verifySolicitacaoLivro += "WHERE Emprestimos.idLivro = :idLivro AND Emprestimos.idUsuario = :idUsuario "
+    verifySolicitacaoLivro += "AND Emprestimos.estado <> 'D'"
 
     devolverLivro = " UPDATE Emprestimos "
-    devolverLivro += "SET situacao = 'D' "
+    devolverLivro += "SET estado = 'D' "
     devolverLivro += "WHERE Emprestimos.id = :id"
 
     getLivrosOnList =  "SELECT Livros.*, Status.nome as 'status'  FROM Livros "

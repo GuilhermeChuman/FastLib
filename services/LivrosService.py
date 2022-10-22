@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import ast
+from fuzzywuzzy import fuzz
 
 
 sys.path.append('../')
@@ -67,6 +68,14 @@ class LivrosService:
 
         return response
 
+    async def verifySolicitacaoLivro(idUsuario, idLivro):
+
+        response = await LivrosRepository.verifySolicitacaoLivro(idUsuario, idLivro)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
 
     async def addTrabalho(item):
 
@@ -83,32 +92,25 @@ class LivrosService:
     async def filterLivros(item, id):
 
         responsePrimary = await LivrosRepository.getLivros()
-            
-        df = pd.DataFrame(responsePrimary)
-        df = df.fillna('')
 
         response = []
-        finalResponse = []
 
-        for x, y in item.items():
-            if(y != None):
-                arrayTitulo = df.query(x+".str.contains('"+y+"', na=False, case=False)")
-                arrayTitulo = arrayTitulo.to_dict('index')
-                response.append([value for value in arrayTitulo.values()])
-
-        response.append(await LivrosRepository.getLivrosOnList(id))
-
-        if len(response) == 0:
-            return responsePrimary
+        for livro in responsePrimary:
+            
+            if(fuzz.partial_ratio(livro['titulo'], item['titulo']) > 70):
+                response.append(livro)
+            elif(fuzz.partial_ratio(livro['descricao'], item['descricao']) > 70):
+                response.append(livro)
+            elif(fuzz.partial_ratio(livro['palavraChave1'], item['palavraChave1']) > 70):
+                response.append(livro)
+            elif(fuzz.partial_ratio(livro['palavraChave2'], item['palavraChave2']) > 70):
+                response.append(livro)
+            elif(fuzz.partial_ratio(livro['palavraChave3'], item['palavraChave3']) > 70):
+                response.append(livro)
+            elif(fuzz.partial_ratio(livro['autores'], item['autores']) > 70):    
+                response.append(livro)
 
         return response
-
-        # finalResponse = [ast.literal_eval(el1) for el1 in set([str(el2) for el2 in response])]
-        
-        # if len(finalResponse) == 0:
-        #     return responsePrimary
-
-        # return finalResponse
 
     async def addLivro(item):
 

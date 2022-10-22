@@ -73,6 +73,18 @@ class LivrosController:
 
             return { "success": False, "message":str(e), "data": None}
 
+    
+    async def verifySolicitacaoLivro(idUsuario, idLivro):
+
+        try:
+
+            response = await LivrosService.verifySolicitacaoLivro(idUsuario, idLivro)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+
     async def verifyEmprestimoLivro(id):
 
         try:

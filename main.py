@@ -227,6 +227,10 @@ async def devolverLivro(id:int):
 async def verifyEmprestimoLivro(id:int):
     return await LivrosController.verifyEmprestimoLivro(id)
 
+@app.get("/verifySolicitacaoLivro/{idUsuario}/{idLivro}", tags=["Emprestimos"], summary="Verifica se há um empréstimo ativo do usuario para o livro informado")
+async def verifySolicitacaoLivro(idUsuario:int, idLivro:int):
+    return await LivrosController.verifySolicitacaoLivro(idUsuario, idLivro)
+
 ###############################    Livros    ##########################################
 
 @app.get("/livros", tags=["Livros"], summary="Listar todos os livros")
