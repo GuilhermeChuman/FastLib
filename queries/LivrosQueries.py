@@ -26,6 +26,9 @@ class LivrosQueries:
     aprovarEmprestimo += "SET estado = 'E', dataEmprestimo = '"+datetime.today().strftime('%Y-%m-%d')+"' "
     aprovarEmprestimo += "WHERE Emprestimos.id = :id"
 
+    recusarEmprestimo = " DELETE FROM Emprestimos "
+    recusarEmprestimo += "WHERE Emprestimos.id = :id"
+    
     getEmprestimoById = " SELECT * FROM Emprestimos "
     getEmprestimoById += "WHERE Emprestimos.id = :id"
 
