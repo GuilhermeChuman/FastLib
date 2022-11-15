@@ -39,6 +39,38 @@ class LivrosRepository:
                 
         return response
 
+    async def getLivrosSemEmprestimo():
+
+        query = LivrosQueries.getAllSemEmprestimo
+        rows = await DB.connection.fetch_all(query=query)
+        response = []
+        for i in rows:
+
+            obj = {}
+
+            queryAutor = LivrosQueries.getAutoresByLivro
+            autores = await DB.connection.fetch_all(query=queryAutor, values={'id':i['id']})
+            
+            obj['id']               = i['id']
+            obj['isbn']             = i['isbn']
+            obj['titulo']           = i['titulo']
+            obj['descricao']        = i['descricao']
+            obj['volume']           = i['volume']
+            obj['palavraChave1']    = i['palavraChave1']
+            obj['palavraChave2']    = i['palavraChave2']
+            obj['palavraChave3']    = i['palavraChave3']
+            obj['ano']              = i['ano']
+            obj['edicao']           = i['edicao']
+            obj['idEditora']        = i['idEditora']
+            obj['editora']          = i['editora']
+            obj['idGenero']         = i['idGenero']
+            obj['genero']           = i['genero']
+            obj['autores']          = autores
+                
+            response.append(obj)
+                
+        return response
+
     async def addTrabalho(item):
 
         query = LivrosQueries.addTrabalho
@@ -79,6 +111,16 @@ class LivrosRepository:
 
         values = {'id': id}
         query = LivrosQueries.aprovarEmprestimo
+        await DB.connection.execute(query=query, values=values)
+
+        return True
+
+    async def recusarEmprestimo(id):
+
+        emprestimo = await LivrosRepository.findEmprestimoById(id)
+
+        values = {'id': id}
+        query = LivrosQueries.recusarEmprestimo
         await DB.connection.execute(query=query, values=values)
 
         return True

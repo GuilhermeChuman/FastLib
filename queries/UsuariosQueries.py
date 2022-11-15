@@ -1,6 +1,6 @@
 class UsuariosQueries:
     
-    getAll = "SELECT * FROM Usuarios"
+    getAll = "SELECT id, nome FROM Usuarios"
 
     getById = "SELECT * FROM Usuarios WHERE id = :id"
 

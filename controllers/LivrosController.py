@@ -18,6 +18,17 @@ class LivrosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def getLivrosSemEmprestimo():
+
+        try:
+
+            response = await LivrosService.getLivrosSemEmprestimo()
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def addTrabalho(item):
 
         try:
@@ -50,6 +61,18 @@ class LivrosController:
         except Exception as e:
 
             return { "success": False, "message":str(e), "data": None}
+
+    async def recusarEmprestimo(id):
+
+        try:
+
+            response = await LivrosService.recusarEmprestimo(id)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+
+            return { "success": False, "message":str(e), "data": None}
+    
 
     async def emprestar(item):
 

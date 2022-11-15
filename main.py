@@ -211,9 +211,13 @@ async def deleteEditora(id: int):
 async def solicitarEmprestimo(item:SolicitarEmprestimoRequests):
     return await LivrosController.solicitarEmprestimo(item.dict())
 
-@app.get("/aprovarEmprestimo/{id}", tags=["Emprestimos"], summary="Emprestar livro por ID")
+@app.get("/aprovarEmprestimo/{id}", tags=["Emprestimos"], summary="Aprovar Empréstimo livro por ID")
 async def aprovarEmprestimo(id:int):
     return await LivrosController.aprovarEmprestimo(id)
+
+@app.get("/recusarEmprestimo/{id}", tags=["Emprestimos"], summary="Aprovar Empréstimo livro por ID")
+async def recusarEmprestimo(id:int):
+    return await LivrosController.recusarEmprestimo(id)
 
 @app.post("/emprestar", tags=["Emprestimos"], summary="Emprestar livro")
 async def emprestar(item:SolicitarEmprestimoRequests):
@@ -236,6 +240,10 @@ async def verifySolicitacaoLivro(idUsuario:int, idLivro:int):
 @app.get("/livros", tags=["Livros"], summary="Listar todos os livros")
 async def getLivros():
     return await LivrosController.getLivros()
+
+@app.get("/getLivrosSemEmprestimo", tags=["Livros"], summary="Listar todos os livros que não possuem empréstimo")
+async def getLivrosSemEmprestimo():
+    return await LivrosController.getLivrosSemEmprestimo()
 
 @app.get("/livros/{id}", tags=["Livros"], summary="Listar um Livro por ID")
 async def getLivroById(id:int):

@@ -19,6 +19,14 @@ class LivrosService:
 
         return response
 
+    async def getLivrosSemEmprestimo():
+
+        response = await LivrosRepository.getLivrosSemEmprestimo()
+
+        #TRATAMENTOS AQUI
+
+        return response
+
     async def getLivroById(id):
 
         response = await LivrosRepository.getLivroById(id)
@@ -38,6 +46,14 @@ class LivrosService:
     async def aprovarEmprestimo(id):
 
         response = await LivrosRepository.aprovarEmprestimo(id)
+
+        #TRATAMENTOS AQUI
+
+        return response
+
+    async def recusarEmprestimo(id):
+
+        response = await LivrosRepository.recusarEmprestimo(id)
 
         #TRATAMENTOS AQUI
 

@@ -7,6 +7,12 @@ class LivrosQueries:
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
     getAll += "ORDER BY titulo"
 
+    getAllSemEmprestimo = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
+    getAllSemEmprestimo += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
+    getAllSemEmprestimo += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    getAllSemEmprestimo += "LEFT JOIN Emprestimos ON(Emprestimos.idLivro = Livros.id AND (emprestimos.estado <> 'E' OR emprestimos.estado IS NULL)) "
+    getAllSemEmprestimo += "ORDER BY titulo"
+
     getById = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
     getById += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
     getById += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
