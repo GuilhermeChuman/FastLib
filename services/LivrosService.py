@@ -67,9 +67,9 @@ class LivrosService:
 
         return response
 
-    async def devolverLivro(id):
+    async def devolverLivro(item):
 
-        response = await LivrosRepository.devolverLivro(id)
+        response = await LivrosRepository.devolverLivro(item)
 
         #TRATAMENTOS AQUI
 

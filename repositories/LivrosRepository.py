@@ -133,11 +133,10 @@ class LivrosRepository:
 
         return True
 
-    async def devolverLivro(id):
+    async def devolverLivro(item):
 
-        await LivrosRepository.findEmprestimoById(id)
+        values = item
 
-        values = {'id': id}
         query = LivrosQueries.devolverLivro
         await DB.connection.execute(query=query, values=values)
 

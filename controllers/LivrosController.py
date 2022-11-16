@@ -85,11 +85,11 @@ class LivrosController:
 
             return { "success": False, "message":str(e), "data": None}
 
-    async def devolverLivro(id):
+    async def devolverLivro(item):
 
         try:
 
-            response = await LivrosService.devolverLivro(id)
+            response = await LivrosService.devolverLivro(item)
             return { "success": True, "message":"OK", "data": response}
 
         except Exception as e:

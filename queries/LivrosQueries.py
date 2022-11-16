@@ -46,8 +46,8 @@ class LivrosQueries:
     verifySolicitacaoLivro += "AND Emprestimos.estado <> 'D'"
 
     devolverLivro = " UPDATE Emprestimos "
-    devolverLivro += "SET estado = 'D' "
-    devolverLivro += "WHERE Emprestimos.id = :id"
+    devolverLivro += "SET estado = 'D', dataDevolucao = :dataDevolucao "
+    devolverLivro += "WHERE Emprestimos.id = :idEmprestimo"
 
     getLivrosOnList =  "SELECT Livros.*, Status.nome as 'status'  FROM Livros "
     getLivrosOnList += "LEFT JOIN Lista_Livros ON(Livros.id = Lista_Livros.idLivro) "

@@ -25,8 +25,10 @@ from requests.LivroRequests import LivroRequests
 from requests.LivroRequests import FilterRequests
 from requests.LivroRequests import TrabalhoRequests
 from requests.LivroRequests import SolicitarEmprestimoRequests
+from requests.LivroRequests import DevolucaoRequests
 
 from requests.EmprestimosRequests import EmprestimosRequests
+
 
 tags_metadata = [
     {
@@ -223,9 +225,9 @@ async def recusarEmprestimo(id:int):
 async def emprestar(item:SolicitarEmprestimoRequests):
     return await LivrosController.emprestar(item.dict())
 
-@app.get("/devolverLivro/{id}", tags=["Emprestimos"], summary="Efetua a devolução de um livro")
-async def devolverLivro(id:int):
-    return await LivrosController.devolverLivro(id)
+@app.post("/devolverLivro", tags=["Emprestimos"], summary="Efetua a devolução de um livro")
+async def devolverLivro(item:DevolucaoRequests):
+    return await LivrosController.devolverLivro(item.dict())
 
 @app.get("/verifyEmprestimoLivro/{id}", tags=["Emprestimos"], summary="Verifica se o livro está emprestado")
 async def verifyEmprestimoLivro(id:int):

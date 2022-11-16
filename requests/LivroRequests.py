@@ -24,6 +24,10 @@ class SolicitarEmprestimoRequests(BaseModel):
     idLivro: int
     dataEmprestimo: date
 
+class DevolucaoRequests(BaseModel):
+    idEmprestimo: int
+    dataDevolucao: date
+
 class FilterRequests(BaseModel):
     titulo: Union[str, None] = None
     descricao: Union[str, None] = None
