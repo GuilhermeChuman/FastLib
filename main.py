@@ -11,6 +11,7 @@ from controllers.UsuariosController import UsuariosController
 from controllers.LivrosController import LivrosController
 from controllers.LogsController import LogsController
 from controllers.EmprestimosController import EmprestimosController
+from controllers.ListasController import ListasController
 
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
@@ -26,7 +27,7 @@ from requests.LivroRequests import FilterRequests
 from requests.LivroRequests import TrabalhoRequests
 from requests.LivroRequests import SolicitarEmprestimoRequests
 from requests.LivroRequests import DevolucaoRequests
-
+from requests.ListasRequests import ListasRequests
 from requests.EmprestimosRequests import EmprestimosRequests
 
 
@@ -38,6 +39,10 @@ tags_metadata = [
     {
         "name": "Usuários",
         "description": "Rotas relacionadas à listagem e manutenção de usuários",
+    },
+        {
+        "name": "Listas",
+        "description": "Rotas relacionadas à listagem e manutenção de listas",
     },
     {
         "name": "Gêneros",
@@ -206,6 +211,20 @@ async def editEditora(id: int, item: EditoraRequests):
 @app.delete("/deleteEditora/{id}", tags=["Editoras"], summary="Deletar uma editora")
 async def deleteEditora(id: int):
     return await EditorasController.deleteEditora(id)
+
+##################################    Listas   #############################################
+
+@app.get("/getListaById/{id}", tags=["Listas"], summary="Seleciona a uma lista pelo Id do usuário")
+async def getListaById(id: int):
+    return await ListasController.getListaById(id)
+
+@app.post("/gravaLivroLista", tags=["Listas"], summary="Grava um item novo na lista pelo Id do usuário")
+async def gravaLivroLista(item: ListasRequests):
+    return await ListasController.gravaLivroLista(item.dict())
+
+@app.get("/removeLivroLista/{id}", tags=["Listas"], summary="Remove um item da lista pelo Id do usuário")
+async def removeLivroLista(id: int):
+    return await ListasController.removeLivroLista(id)
 
 ###############################    Emprestimos    ##########################################
 
