@@ -18,6 +18,18 @@ class ListasController:
             return { "success": False, "message":str(e), "data": None}
 
 
+    async def getStatus():
+
+        try:
+
+            response = await ListasService.getStatus()
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+
     async def gravaLivroLista(item):
 
         try:

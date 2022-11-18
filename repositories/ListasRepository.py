@@ -7,10 +7,10 @@ from queries.ListasQueries import ListasQueries
 
 class ListasRepository:
 
-    async def verifyLivroNaLista(idLista, idLivro):
+    async def verifyLivroNaLista(idUsuario, idLivro):
 
         values = {
-            'idLista': idLista,
+            'idUsuario': idUsuario,
             'idLivro': idLivro
         }
 
@@ -22,6 +22,13 @@ class ListasRepository:
         else:
             return True
 
+    async def getStatus():
+        
+        query = ListasQueries.getStatus
+        rows = await DB.connection.fetch_all(query=query)
+        
+        return rows
+
     async def getListaById(idUsuario):
 
         values = {
@@ -29,29 +36,24 @@ class ListasRepository:
         }
 
         query = ListasQueries.getListaById_NumLivros
-        rows = await DB.connection.fetch_all(query=query, values=values)
-        response = []
+        lista = await DB.connection.fetch_one(query=query, values=values)
 
-        for i in rows:
+        obj = {}
 
-            obj = {}
+        queryLivros = ListasQueries.getListaById
+        livros = await DB.connection.fetch_all(query=queryLivros, values={'idLista':lista['idLista']})
 
-            queryLivros = ListasQueries.getListaById
-            livros = await DB.connection.fetch_all(query=queryLivros, values={'idLista':i['idLista']})
+        obj['idLista']      = lista.idLista
+        obj['idUsuario']    = lista.idUsuario
+        obj['login']        = lista.login
+        obj['total_livros'] = lista.total_livros
+        obj['livros']       = livros
 
-            obj['idLista']      = i['idLista']
-            obj['idUsuario']    = i['idUsuario']
-            obj['login']        = i['login']
-            obj['total_livros'] = i['total_livros']
-            obj['livros']       = livros
-
-            response.append(obj)
-
-        return response
+        return obj
 
     async def gravaLivroLista(item):
 
-        if(ListasRepository.verifyLivroNaLista(item['idLista'], item['idLivro'])):
+        if(ListasRepository.verifyLivroNaLista(item['idUsuario'], item['idLivro'])):
             return ListasRepository.insertLivroLista(item)
         else:
             return ListasRepository.updateLivroLista(item)

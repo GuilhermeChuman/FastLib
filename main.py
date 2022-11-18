@@ -226,6 +226,12 @@ async def gravaLivroLista(item: ListasRequests):
 async def removeLivroLista(id: int):
     return await ListasController.removeLivroLista(id)
 
+##################################    Status    #############################################
+
+@app.get("/getStatus", tags=["Status"], summary="Seleciona todos os status")
+async def getStatus():
+    return await ListasController.getStatus()
+
 ###############################    Emprestimos    ##########################################
 
 @app.post("/solicitarEmprestimo", tags=["Emprestimos"], summary="Solicitar emprestimo de um livro")

@@ -14,6 +14,14 @@ class ListasService:
 
         return response
 
+    async def getStatus():
+
+        response = await ListasRepository.getStatus()
+
+        #TRATAMENTOS AQUI
+
+        return response
+
     async def gravaLivroLista(item):
 
         response = await ListasRepository.getListaById(item)
