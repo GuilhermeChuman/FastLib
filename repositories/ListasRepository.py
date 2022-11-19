@@ -7,17 +7,30 @@ from queries.ListasQueries import ListasQueries
 
 class ListasRepository:
 
-    async def verifyLivroNaLista(idUsuario, idLivro):
+    async def getStatussLivroNaLista(idLista, idLivro):
 
         values = {
-            'idUsuario': idUsuario,
+            'idLista': idLista,
+            'idLivro': idLivro
+        }
+
+        if(await ListasRepository.verifyLivroNaLista(idLista, idLivro)):
+            query = ListasQueries.getStatussLivroNaLista
+            rows = await DB.connection.fetch_one(query=query, values=values)
+        
+            return rows.idStatus
+
+    async def verifyLivroNaLista(idLista, idLivro):
+
+        values = {
+            'idLista': idLista,
             'idLivro': idLivro
         }
 
         query = ListasQueries.verifyLivroNaLista
         rows = await DB.connection.fetch_all(query=query, values=values)
         
-        if rows == None:
+        if len(rows) == 0:
             return False
         else:
             return True
@@ -53,10 +66,10 @@ class ListasRepository:
 
     async def gravaLivroLista(item):
 
-        if(ListasRepository.verifyLivroNaLista(item['idUsuario'], item['idLivro'])):
-            return ListasRepository.insertLivroLista(item)
+        if(await ListasRepository.verifyLivroNaLista(item['idLista'], item['idLivro'])):
+            return await ListasRepository.updateLivroLista(item)
         else:
-            return ListasRepository.updateLivroLista(item)
+            return await ListasRepository.insertLivroLista(item)
 
 
     async def insertLivroLista(item):
@@ -75,9 +88,9 @@ class ListasRepository:
 
         return True
 
-    async def removeLivroLista(idLista):
+    async def removeLivroLista(idLista, idLivro):
 
-        values = {'idLista': idLista}
+        values = {'idLista': idLista, 'idLivro': idLivro}
         query = ListasQueries.removeLivroLista
         await DB.connection.execute(query=query, values=values)
 

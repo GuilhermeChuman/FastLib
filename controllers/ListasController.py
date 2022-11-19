@@ -18,6 +18,28 @@ class ListasController:
             return { "success": False, "message":str(e), "data": None}
 
 
+    async def getStatussLivroNaLista(idLista, idLivro):
+
+        try:
+
+            response = await ListasService.getStatussLivroNaLista(idLista, idLivro)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
+    async def verifyLivroNaLista(idLista, idLivro):
+
+        try:
+
+            response = await ListasService.verifyLivroNaLista(idLista, idLivro)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def getStatus():
 
         try:
@@ -42,11 +64,11 @@ class ListasController:
             return { "success": False, "message":str(e), "data": None}
 
 
-    async def removeLivroLista(idLista):
+    async def removeLivroLista(idLista, idLivro):
 
         try:
 
-            response = await ListasService.removeLivroLista(idLista)
+            response = await ListasService.removeLivroLista(idLista, idLivro)
             return { "success": True, "message":"OK", "data": response}
 
         except Exception as e:

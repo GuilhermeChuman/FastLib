@@ -5,8 +5,14 @@ class ListasQueries:
     verifyLivroNaLista += "INNER JOIN listas "
     verifyLivroNaLista +=   "ON( lista_livros.idLista = listas.id ) "
     verifyLivroNaLista += "WHERE lista_livros.idLivro = :idLivro "
-    verifyLivroNaLista += "AND listas.idUsuario = :idUsuario "
+    verifyLivroNaLista += "AND listas.id = :idLista "
 
+    getStatussLivroNaLista =  "SELECT lista_livros.idStatus "
+    getStatussLivroNaLista += "FROM lista_livros "
+    getStatussLivroNaLista += "INNER JOIN listas "
+    getStatussLivroNaLista +=   "ON( lista_livros.idLista = listas.id ) "
+    getStatussLivroNaLista += "WHERE lista_livros.idLivro = :idLivro "
+    getStatussLivroNaLista += "AND listas.id = :idLista "
 
     getStatus =  "SELECT * "
     getStatus += "FROM Status "
@@ -16,12 +22,12 @@ class ListasQueries:
 
 
     updateLivroLista =  "UPDATE lista_livros "
-    updateLivroLista += "SET idLivro = :idLivro, idStatus = :idStatus "
-    updateLivroLista += "WHERE idLista = :idLista"
+    updateLivroLista += "SET idStatus = :idStatus "
+    updateLivroLista += "WHERE idLista = :idLista AND idLivro = :idLivro"
 
 
     removeLivroLista =  "DELETE FROM lista_livros "
-    removeLivroLista += "WHERE idLista = :idLista "
+    removeLivroLista += "WHERE idLista = :idLista AND idLivro = :idLivro"
 
 
     getListaById_NumLivros =  " SELECT listas.id as idLista, listas.idUsuario, listas.login, "

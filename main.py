@@ -208,13 +208,21 @@ async def deleteEditora(id: int):
 async def getListaById(id: int):
     return await ListasController.getListaById(id)
 
+@app.get("/verifyLivroNaLista/{idLista}/{idLivro}", tags=["Listas"], summary="Seleciona a uma lista pelo Id do usuário")
+async def verifyLivroNaLista(idLista, idLivro):
+    return await ListasController.verifyLivroNaLista(idLista, idLivro)
+
+@app.get("/getStatusLivroNaLista/{idLista}/{idLivro}", tags=["Listas"], summary="Seleciona a uma lista pelo Id do usuário")
+async def getStatussLivroNaLista(idLista, idLivro):
+    return await ListasController.getStatussLivroNaLista(idLista, idLivro)
+
 @app.post("/gravaLivroLista", tags=["Listas"], summary="Grava um item novo na lista pelo Id do usuário")
 async def gravaLivroLista(item: ListasRequests):
     return await ListasController.gravaLivroLista(item.dict())
 
-@app.get("/removeLivroLista/{id}", tags=["Listas"], summary="Remove um item da lista pelo Id do usuário")
-async def removeLivroLista(id: int):
-    return await ListasController.removeLivroLista(id)
+@app.get("/removeLivroLista/{idLista}/{idLivro}", tags=["Listas"], summary="Remove um item da lista pelo Id do usuário")
+async def removeLivroLista(idLista, idLivro):
+    return await ListasController.removeLivroLista(idLista, idLivro)
 
 ##################################    Status    #############################################
 
