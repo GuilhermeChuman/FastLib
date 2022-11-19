@@ -4,6 +4,7 @@ sys.path.append('../')
 
 from env import DB
 from queries.UsuariosQueries import UsuariosQueries
+from queries.ListasQueries import ListasQueries
 
 class UsuariosRepository:
 
@@ -31,11 +32,24 @@ class UsuariosRepository:
         query = UsuariosQueries.auth
         rows = await DB.connection.fetch_one(query=query, values=item)
 
+        query = ListasQueries.getById
+        lista = await DB.connection.fetch_one(query=query, values={'idUsuario':rows['id']})
+
+        obj = {}
+        obj['id']               = rows['id']
+        obj['login']            = rows['login']
+        obj['password']         = rows['password']
+        obj['nome']             = rows['nome']
+        obj['email']            = rows['email']
+        obj['validationToken']  = rows['validationToken']
+        obj['status']           = rows['status']
+        obj['idLista']          = lista['id']
+
         if rows == None:
             raise Exception("Usuário ou Senha inválidos")
 
         else:
-            return rows
+            return obj
 
     async def addUsuario(item):
 

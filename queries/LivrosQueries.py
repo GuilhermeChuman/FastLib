@@ -7,6 +7,28 @@ class LivrosQueries:
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
     getAll += "ORDER BY titulo"
 
+    totalLivros = "SELECT count(*) as total FROM Livros"
+
+    totalEmprestados =  "SELECT count(*) as total FROM Livros "
+    totalEmprestados += "INNER JOIN Emprestimos ON(Emprestimos.idLivro = Livros.id AND Emprestimos.estado = 'E')"
+
+    livrosPorGenero =  "SELECT COALESCE(Generos.nome, 'NULL') as 'genero', Count(Livros.titulo)  as total "
+    livrosPorGenero += "FROM Livros "
+    livrosPorGenero += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    livrosPorGenero += "GROUP BY genero "
+
+    emprestimosPorLivro =  "SELECT Livros.id, Livros.titulo, Editoras.nome as 'editora', Generos.nome as 'genero', count(Livros.id) as total FROM Editoras "
+    emprestimosPorLivro += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
+    emprestimosPorLivro += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    emprestimosPorLivro += "INNER JOIN Emprestimos ON(Emprestimos.idLivro = Livros.id)"
+    emprestimosPorLivro += "GROUP BY Livros.id"
+
+    emprestimosPorGenero =  "SELECT Generos.id, Generos.nome as 'genero', count('genero') as total FROM Editoras "
+    emprestimosPorGenero += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
+    emprestimosPorGenero += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    emprestimosPorGenero += "INNER JOIN Emprestimos ON(Emprestimos.idLivro = Livros.id)"
+    emprestimosPorGenero += "GROUP BY Generos.id"
+
     getAllSemEmprestimo = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
     getAllSemEmprestimo += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
     getAllSemEmprestimo += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "

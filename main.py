@@ -98,16 +98,6 @@ async def standard():
 async def autenticate(item: AuthRequests):
     return await UsuariosController.auth(item.dict())
 
-###################################  Empréstimos  #####################################
-
-@app.get("/emprestimo", tags=["Emprestimos"], summary="")
-async def getEmprestimos():
-    return await EmprestimosController.getEmprestimos()
-
-@app.post("/emprestimo", tags=["Emprestimos"], summary="")
-async def addEmprestimos(item: EmprestimosRequests):
-    return await EmprestimosController.addEmprestimos(item.dict())
-
 ###################################  Usuarios  ########################################
 
 @app.get("/usuarios", tags=["Usuários"], summary="Listar todos os usuários")
@@ -234,9 +224,17 @@ async def getStatus():
 
 ###############################    Emprestimos    ##########################################
 
+@app.get("/emprestimo", tags=["Emprestimos"], summary="Apresenta todos os emprestimos ocorridos")
+async def getEmprestimos():
+    return await EmprestimosController.getEmprestimos()
+
 @app.post("/solicitarEmprestimo", tags=["Emprestimos"], summary="Solicitar emprestimo de um livro")
 async def solicitarEmprestimo(item:SolicitarEmprestimoRequests):
     return await LivrosController.solicitarEmprestimo(item.dict())
+
+@app.get("/emprestimosStatus", tags=["Emprestimos"], summary="Apresenta as estatísticas de todos os empréstimos")
+async def emprestimosStatus():
+    return await EmprestimosController.emprestimosStatus()
 
 @app.get("/aprovarEmprestimo/{id}", tags=["Emprestimos"], summary="Aprovar Empréstimo livro por ID")
 async def aprovarEmprestimo(id:int):
@@ -267,6 +265,10 @@ async def verifySolicitacaoLivro(idUsuario:int, idLivro:int):
 @app.get("/livros", tags=["Livros"], summary="Listar todos os livros")
 async def getLivros():
     return await LivrosController.getLivros()
+
+@app.get("/allLivrosStatus", tags=["Livros"], summary="Informa as estatísticas do acerto da biblioteca")
+async def allLivrosStatus():
+    return await LivrosController.allLivrosStatus()
 
 @app.get("/getLivrosSemEmprestimo", tags=["Livros"], summary="Listar todos os livros que não possuem empréstimo")
 async def getLivrosSemEmprestimo():

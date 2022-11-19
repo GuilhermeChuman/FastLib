@@ -32,6 +32,9 @@ class ListasQueries:
     getListaById_NumLivros += " WHERE listas.idUsuario = :idUsuario "
     getListaById_NumLivros += " GROUP BY idLista, listas.idUsuario, listas.login"
     
+    getById =  "SELECT * "
+    getById += "FROM listas "
+    getById += "WHERE listas.idUsuario = :idUsuario "
 
     getListaById =  "SELECT  livros.titulo, editoras.nome as editora, generos.nome as genero, "
     getListaById += "status.nome as status "

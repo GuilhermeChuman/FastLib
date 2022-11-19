@@ -19,6 +19,14 @@ class LivrosService:
 
         return response
 
+    async def allLivrosStatus():
+
+        response = await LivrosRepository.allLivrosStatus()
+
+        #TRATAMENTOS AQUI
+
+        return response
+
     async def getLivrosSemEmprestimo():
 
         response = await LivrosRepository.getLivrosSemEmprestimo()

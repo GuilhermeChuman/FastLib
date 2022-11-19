@@ -18,6 +18,17 @@ class LivrosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def allLivrosStatus():  
+
+        try:
+
+            response = await LivrosService.allLivrosStatus()
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None} 
+
     async def getLivrosSemEmprestimo():
 
         try:

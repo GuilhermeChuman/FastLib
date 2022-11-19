@@ -39,6 +39,33 @@ class LivrosRepository:
                 
         return response
 
+    async def allLivrosStatus():
+        
+        query = LivrosQueries.totalLivros
+        totalLivros = await DB.connection.fetch_one(query=query)
+
+        query = LivrosQueries.totalEmprestados
+        totalEmprestados = await DB.connection.fetch_one(query=query)
+
+        query = LivrosQueries.emprestimosPorLivro
+        emprestimosPorLivro = await DB.connection.fetch_all(query=query)
+
+        query = LivrosQueries.emprestimosPorGenero
+        emprestimosPorGenero = await DB.connection.fetch_all(query=query)
+
+        query = LivrosQueries.livrosPorGenero
+        livrosPorGenero = await DB.connection.fetch_all(query=query)
+
+        obj = {}
+        obj['total'] = totalLivros['total']
+        obj['emprestados'] = totalEmprestados['total']
+        obj['disponiveis'] = totalLivros['total'] - totalEmprestados['total']
+        obj['livrosPorGenero'] = livrosPorGenero
+        obj['emprestimosPorLivro'] = emprestimosPorLivro
+        obj['emprestimosPorGenero'] = emprestimosPorGenero
+
+        return obj
+
     async def getLivrosSemEmprestimo():
 
         query = LivrosQueries.getAllSemEmprestimo
@@ -194,7 +221,6 @@ class LivrosRepository:
         response = await DB.connection.fetch_all(query=query, values=values)
 
         return response
-
 
     async def getLivroById(id):
 

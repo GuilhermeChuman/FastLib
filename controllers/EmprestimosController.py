@@ -17,6 +17,17 @@ class EmprestimosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def emprestimosStatus():
+
+        try:
+
+            response = await EmprestimosService.emprestimosStatus()
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def EmprestimosService():
 
         try:
