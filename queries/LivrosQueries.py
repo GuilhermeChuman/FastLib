@@ -2,9 +2,13 @@ from datetime import datetime
 
 class LivrosQueries:
     
-    getAll = "SELECT Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
+    getAll = "SELECT status.nome as status, status.cor, Editoras.nome as 'editora', Generos.nome as 'genero', Livros.* FROM Editoras "
     getAll += "RIGHT JOIN Livros ON(Livros.idEditora = Editoras.id) "
     getAll += "LEFT JOIN Generos ON(Livros.idGenero = Generos.id) "
+    getAll += "LEFT JOIN  lista_livros "
+    getAll +=     "ON( lista_livros.idLivro = livros.id ) "
+    getAll += "LEFT JOIN status "
+    getAll +=     "ON( status.id = lista_livros.idStatus ) "
     getAll += "ORDER BY titulo"
 
     totalLivros = "SELECT count(*) as total FROM Livros"

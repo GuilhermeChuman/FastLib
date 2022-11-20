@@ -33,6 +33,8 @@ class LivrosRepository:
             obj['editora']          = i['editora']
             obj['idGenero']         = i['idGenero']
             obj['genero']           = i['genero']
+            obj['status']           = i['status']
+            obj['cor']              = i['cor']
             obj['autores']          = autores
                 
             response.append(obj)

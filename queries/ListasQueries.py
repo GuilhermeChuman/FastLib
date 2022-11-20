@@ -42,8 +42,8 @@ class ListasQueries:
     getById += "FROM listas "
     getById += "WHERE listas.idUsuario = :idUsuario "
 
-    getListaById =  "SELECT  livros.titulo, editoras.nome as editora, generos.nome as genero, "
-    getListaById += "status.nome as status "
+    getListaById =  "SELECT  livros.id, livros.titulo, editoras.nome as editora, "
+    getListaById +=     "generos.nome as genero, status.cor, status.nome as status "
     getListaById += "FROM lista_livros "
     getListaById += "INNER JOIN  livros "
     getListaById +=     "ON( lista_livros.idLivro = livros.id )  "

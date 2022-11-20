@@ -1,6 +1,8 @@
 import sys
 import pandas as pd
 import ast
+from itertools import groupby
+from operator import itemgetter
 from fuzzywuzzy import fuzz
 
 
@@ -113,6 +115,30 @@ class LivrosService:
 
         return response
 
+    async def constructObjLivro(livro, ratio):
+
+        obj = {}
+        obj['id']               = livro['id']
+        obj['isbn']             = livro['isbn']
+        obj['titulo']           = livro['titulo']
+        obj['descricao']        = livro['descricao']
+        obj['volume']           = livro['volume']
+        obj['palavraChave1']    = livro['palavraChave1']
+        obj['palavraChave2']    = livro['palavraChave2']
+        obj['palavraChave3']    = livro['palavraChave3']
+        obj['ano']              = livro['ano']
+        obj['edicao']           = livro['edicao']
+        obj['idEditora']        = livro['idEditora']
+        obj['editora']          = livro['editora']
+        obj['idGenero']         = livro['idGenero']
+        obj['genero']           = livro['genero']
+        obj['status']           = livro['status']
+        obj['cor']              = livro['cor']
+        obj['autores']          = livro['autores']
+        obj['ratio']            = ratio
+
+        return obj
+
     async def filterLivros(item, id):
 
         responsePrimary = await LivrosRepository.getLivros()
@@ -120,21 +146,48 @@ class LivrosService:
         response = []
 
         for livro in responsePrimary:
-            
-            if(fuzz.partial_ratio(livro['titulo'], item['titulo']) > 70):
-                response.append(livro)
-            elif(fuzz.partial_ratio(livro['descricao'], item['descricao']) > 70):
-                response.append(livro)
-            elif(fuzz.partial_ratio(livro['palavraChave1'], item['palavraChave1']) > 70):
-                response.append(livro)
-            elif(fuzz.partial_ratio(livro['palavraChave2'], item['palavraChave2']) > 70):
-                response.append(livro)
-            elif(fuzz.partial_ratio(livro['palavraChave3'], item['palavraChave3']) > 70):
-                response.append(livro)
-            elif(fuzz.partial_ratio(livro['autores'], item['autores']) > 70):    
-                response.append(livro)
 
-        return response
+            ratioTitulo =  fuzz.ratio(livro['titulo'], item['titulo'])/3
+            ratioTitulo += fuzz.partial_ratio(livro['titulo'], item['titulo'])/3
+            ratioTitulo += fuzz.token_sort_ratio(livro['titulo'], item['titulo'])/3
+
+            ratioDescricao =  fuzz.ratio(livro['descricao'], item['descricao'])/3
+            ratioDescricao += fuzz.partial_ratio(livro['descricao'], item['descricao'])/3
+            ratioDescricao += fuzz.token_sort_ratio(livro['descricao'], item['descricao'])/3
+
+            ratioPalavraChave1 =  fuzz.ratio(livro['palavraChave1'], item['palavraChave1'])/3
+            ratioPalavraChave1 += fuzz.partial_ratio(livro['palavraChave1'], item['palavraChave1'])/3
+            ratioPalavraChave1 += fuzz.token_sort_ratio(livro['palavraChave1'], item['palavraChave1'])/3
+
+            ratioPalavraChave2 =  fuzz.ratio(livro['palavraChave2'], item['palavraChave2'])/3
+            ratioPalavraChave2 += fuzz.partial_ratio(livro['palavraChave2'], item['palavraChave2'])/3
+            ratioPalavraChave2 += fuzz.token_sort_ratio(livro['palavraChave2'], item['palavraChave2'])/3
+
+            ratioPalavraChave3 =  fuzz.ratio(livro['palavraChave3'], item['palavraChave3'])/3
+            ratioPalavraChave3 += fuzz.partial_ratio(livro['palavraChave3'], item['palavraChave3'])/3
+            ratioPalavraChave3 += fuzz.token_sort_ratio(livro['palavraChave3'], item['palavraChave3'])/3
+
+            ratioAutores =  fuzz.ratio(livro['autores'], item['autores'])/3
+            ratioAutores += fuzz.partial_ratio(livro['autores'], item['autores'])/3
+            ratioAutores += fuzz.token_sort_ratio(livro['autores'], item['autores'])/3
+
+            if(ratioTitulo > 60):
+                response.append(await LivrosService.constructObjLivro(livro, ratioTitulo))
+            elif(ratioDescricao > 60):
+                response.append(await LivrosService.constructObjLivro(livro, ratioDescricao))
+            elif(ratioPalavraChave1 > 60):
+                response.append(await LivrosService.constructObjLivro(livro, ratioPalavraChave1))
+            elif(ratioPalavraChave2 > 60):
+                response.append(await LivrosService.constructObjLivro(livro, ratioPalavraChave2))
+            elif(ratioPalavraChave3 > 60):
+                response.append(await LivrosService.constructObjLivro(livro, ratioPalavraChave3))
+            elif(ratioAutores > 60):    
+                response.append(await LivrosService.constructObjLivro(livro, ratioAutores))
+
+        newRows = sorted(response, key = itemgetter('ratio'))
+        newRows = newRows[::-1]
+
+        return newRows
 
     async def addLivro(item):
 
