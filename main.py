@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, UploadFile
 from fastapi.responses import RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
 from env import DB
@@ -28,7 +28,6 @@ from requests.LivroRequests import TrabalhoRequests
 from requests.LivroRequests import SolicitarEmprestimoRequests
 from requests.LivroRequests import DevolucaoRequests
 from requests.ListasRequests import ListasRequests
-from requests.EmprestimosRequests import EmprestimosRequests
 
 
 tags_metadata = [
