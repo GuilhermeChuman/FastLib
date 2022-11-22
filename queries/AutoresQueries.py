@@ -1,17 +1,17 @@
 class AutoresQueries:
     
-    getAll = "SELECT * FROM Autores ORDER BY Autores.nome"
+    getAll = "SELECT * FROM autores ORDER BY autores.nome"
 
-    getById = "SELECT * FROM Autores WHERE id = :id"
+    getById = "SELECT * FROM autores WHERE id = :id"
 
-    add =  "INSERT INTO Autores(nome) " 
+    add =  "INSERT INTO autores(nome) " 
     add += "VALUES (:nome)"
 
     getAutoresByLivro = " SELECT trabalhos.id, autores.nome as 'autor' from autores "
     getAutoresByLivro += "INNER JOIN trabalhos ON(autores.id = trabalhos.idAutor) "
     getAutoresByLivro += "WHERE trabalhos.idLivro = :id"
 
-    edit =  "UPDATE Autores " 
+    edit =  "UPDATE autores " 
     edit += "SET nome = :nome "
     edit += "WHERE id = :id"
 

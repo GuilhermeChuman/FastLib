@@ -15,7 +15,7 @@ class ListasQueries:
     getStatussLivroNaLista += "AND listas.id = :idLista "
 
     getStatus =  "SELECT * "
-    getStatus += "FROM Status "
+    getStatus += "FROM status "
 
     insertLivroLista =  "INSERT INTO lista_livros(idLista, idLivro, idStatus) "
     insertLivroLista += "VALUES (:idLista, :idLivro, :idStatus) "

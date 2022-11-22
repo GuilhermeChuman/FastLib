@@ -1,14 +1,14 @@
 class GenerosQueries:
     
-    getAll = "SELECT * FROM Generos"
+    getAll = "SELECT * FROM generos"
 
-    getById = "SELECT * FROM Generos WHERE id = :id"
+    getById = "SELECT * FROM generos WHERE id = :id"
 
-    add =  "INSERT INTO Generos(nome, descricao) " 
+    add =  "INSERT INTO generos(nome, descricao) " 
     add += "VALUES (:nome, :descricao)"
 
-    edit =  "UPDATE Generos " 
+    edit =  "UPDATE generos " 
     edit += "SET nome = :nome, descricao = :descricao "
     edit += "WHERE id = :id"
 
-    delete = "DELETE FROM Generos WHERE id = :id"
+    delete = "DELETE FROM generos WHERE id = :id"

@@ -1,14 +1,14 @@
 class EditorasQueries:
     
-    getAll = "SELECT * FROM Editoras"
+    getAll = "SELECT * FROM editoras"
 
-    getById = "SELECT * FROM Editoras WHERE id = :id"
+    getById = "SELECT * FROM editoras WHERE id = :id"
 
-    add =  "INSERT INTO Editoras(nome) " 
+    add =  "INSERT INTO editoras(nome) " 
     add += "VALUES (:nome)"
 
-    edit =  "UPDATE Editoras " 
+    edit =  "UPDATE editoras " 
     edit += "SET nome = :nome "
     edit += "WHERE id = :id"
 
-    delete = "DELETE FROM Editoras WHERE id = :id"
+    delete = "DELETE FROM editoras WHERE id = :id"
