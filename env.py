@@ -2,17 +2,31 @@ from databases import Database
 import codecs
 import csv
 from io import BytesIO
+import os
+
+class Mail:
+
+    async def getMailConfigs():
+        
+        return {
+            #local configs
+            # 'smtp_server': 'smtplw.com.br',
+            # 'sender_email': '',
+            # 'password': '',
+            # 'port': 465 
+
+
+            #prod configs
+            'sender_email': os.environ['EMAIL'],
+            'password': os.environ['MAIL_PASSWORD'],
+            'smtp_server': 'smtplw.com.br',
+            'port': 465 
+        }
 
 class DB:
-#Senha do BD: Newsenha@4
-#Senha do ambiente: Newsenha+149626
-#Senha do ambiente PYTHON: Newsenha@149626
-#Senha do email: Newsenha+4
+    
     #DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
-    #DATABASE_URL = "host='fastlib.mysql.dbaas.com.br',user=fastlib, passwd=Newsenha@4,db=fastlib"
-    # SQLALCHEMY_DATABASE_URL = "127.0.0.1:8000"
-    # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
-    DATABASE_URL = "mysql+mysqlconnector://fastlib:Newsenha@4@fastlib.mysql.dbaas.com.br/fastlib"
+    DATABASE_URL = os.environ['DB_URL']
 
     connection = Database(DATABASE_URL)
 

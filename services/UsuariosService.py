@@ -7,6 +7,7 @@ sys.path.append('../')
 
 from repositories.UsuariosRepository import UsuariosRepository
 from mailLayouts.activateEmail import ActivateEmail
+from env import Mail
 
 
 class UsuariosServices:
@@ -39,10 +40,10 @@ class UsuariosServices:
 
         cadUser = await UsuariosRepository.signup(item)
 
-        body = ActivateEmail.getBody(cadUser['nome'], '')
+        mail = ActivateEmail.getBody(cadUser['nome'], '')
 
         try:
-            UsuariosServices.sendMail()
+            UsuariosServices.sendMail(cadUser['email'], mail['body'], mail['subject'])
 
         except Exception as e:
 
@@ -51,11 +52,13 @@ class UsuariosServices:
         return cadUser
 
 
-    async def sendMail(smtp_server, port, sender_email, password, receiver_email, message, subject):
+    async def sendMail(receiver_email, message, subject):
+
+        mailConf = Mail.getMailConfigs()
 
         content = MIMEMultipart("alternative")
         content["Subject"] = subject
-        content["From"] = sender_email
+        content["From"] = mailConf['sender_email']
         content["To"] = receiver_email
 
         body = MIMEText(message, "html")
@@ -64,11 +67,9 @@ class UsuariosServices:
 
         # Create a secure SSL context
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-            server.login(sender_email, password)
-            server.sendmail(
-                sender_email, receiver_email, content.as_string()
-            )
+        with smtplib.SMTP_SSL(mailConf['smtp_server'], mailConf['port'], context=context) as server:
+            server.login(mailConf['sender_email'], mailConf['password'])
+            server.sendmail(mailConf['sender_email'], receiver_email, content.as_string())
 
 
     async def addUsuario(item):

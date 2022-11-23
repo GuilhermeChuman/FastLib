@@ -9,8 +9,6 @@ class UsuariosController:
 
     async def getUsuarios():
 
-        return os.environ['TEST']
-
         try:
 
             response = await UsuariosServices.getUsuarios()
