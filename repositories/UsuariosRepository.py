@@ -1,4 +1,6 @@
 import sys
+import random
+import string
 
 sys.path.append('../')
 
@@ -51,16 +53,76 @@ class UsuariosRepository:
         else:
             return obj
 
+    async def signup(item):
+
+        item['validationToken'] = await UsuariosRepository.generateToken()
+        item['status'] = 'T'
+        item['id'] = await UsuariosRepository.addUsuario(item)
+        
+        
+        listaQuery = UsuariosQueries.addLista
+        values = {
+            'idUsuario': item['id'],
+            'login': item['nome']
+        }
+
+        await DB.connection.execute(query=listaQuery, values=values)
+        listData = await DB.last_inserted_id('listas')
+        item['idLista'] = listData['id']
+
+        return item
+
+    async def generateToken():
+
+        tokenValid = False
+
+        while not tokenValid:
+
+            token = ''
+
+            for i in range(15):
+                token += await UsuariosRepository.randomChar(random.randrange(2))
+
+            tokenValid = await UsuariosRepository.validateToken(token)
+        
+        return token 
+
+        
+    async def validateToken(token):
+
+        query = UsuariosQueries.validateToken
+        rows = await DB.connection.fetch_all(query=query, values={'validationToken': token})
+
+        if len(rows) == 0:
+            return True
+        else:
+            return False
+
+    async def randomChar(mode):
+
+        match mode:
+
+            # select 1 lowercase
+            case 0:
+                return random.choice(string.ascii_lowercase)
+
+            # select 1 uppercase
+            case 1:
+                return random.choice(string.ascii_uppercase)
+
+            # select 1 digit
+            case 2:
+                return random.choice(string.digits)
+
     async def addUsuario(item):
 
         query = UsuariosQueries.add
-        values = [
-            item
-        ]
-        await DB.connection.execute_many(query=query, values=values)
-        data = await DB.last_inserted_id('Usuarios')
+        values = item
 
-        return data
+        await DB.connection.execute(query=query, values=values)
+        data = await DB.last_inserted_id('usuarios')
+
+        return data['id']
 
     async def editUsuario(id, item):
 

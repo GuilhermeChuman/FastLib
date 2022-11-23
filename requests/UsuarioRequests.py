@@ -12,3 +12,10 @@ class UsuarioRequests(BaseModel):
 class AuthRequests(BaseModel):
     login: str
     password: str
+
+class SignupRequests(BaseModel):
+    nome: str
+    email: str
+    login: str
+    password: str
+    

@@ -30,6 +30,14 @@ class UsuariosServices:
 
         return response
 
+    async def signup(item):
+
+        cadUser = await UsuariosRepository.signup(item)
+
+        #TRATAMENTOS AQUI
+
+        return cadUser
+
     async def addUsuario(item):
 
         response = await UsuariosRepository.addUsuario(item)

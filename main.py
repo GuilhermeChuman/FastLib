@@ -16,6 +16,7 @@ from controllers.ListasController import ListasController
 #Requests
 from requests.UsuarioRequests import UsuarioRequests
 from requests.UsuarioRequests import AuthRequests
+from requests.UsuarioRequests import SignupRequests
 
 from requests.GeneroRequests import GeneroRequests
 from requests.AutorRequests import AutorRequests
@@ -96,6 +97,10 @@ async def standard():
 @app.post("/auth", tags=["Auth"], summary="")
 async def autenticate(item: AuthRequests):
     return await UsuariosController.auth(item.dict())
+
+@app.post("/user/signup", tags=["Auth"], summary="")
+async def signup(item: SignupRequests):
+    return await UsuariosController.signup(item.dict())
 
 ###################################  Usuarios  ########################################
 

@@ -39,6 +39,17 @@ class UsuariosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def signup(item):
+
+        try:
+
+            response = await UsuariosServices.signup(item)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def addUsuario(item):
 
         try:

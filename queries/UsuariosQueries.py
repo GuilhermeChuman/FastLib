@@ -2,6 +2,11 @@ class UsuariosQueries:
     
     getAll = "SELECT id, nome FROM usuarios"
 
+    validateToken = "SELECT * FROM usuarios WHERE validationToken = :validationToken"
+
+    addLista =  "INSERT INTO listas(login, idUsuario) "
+    addLista += "VALUES (:login, :idUsuario) "
+
     getById = "SELECT * FROM usuarios WHERE id = :id"
 
     add =  "INSERT INTO usuarios(login, password, nome, email, validationToken, status) " 
