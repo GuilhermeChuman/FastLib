@@ -3,7 +3,7 @@ class ActivateEmail:
     async def getBody(name, buttonLink):
 
         return {
-            'subject': 'Ativacao da Conta',
+            'subject': 'Ativação da Conta',
             'body': """\
                 <html>
                     <head>
@@ -39,7 +39,8 @@ class ActivateEmail:
                         </style>
                     </head>
                     <body>
-                        <h1>Olá, """ + name + """\</h1> 
+                        <h1>Olá, """ + name + " "+ """\
+                            </h1> 
 
                             Parabens por se juntar ao SilverFish!<br>
 

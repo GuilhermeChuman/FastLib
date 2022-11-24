@@ -10,23 +10,23 @@ class Mail:
         
         return {
             #local configs
-            # 'smtp_server': 'smtplw.com.br',
-            # 'sender_email': '',
-            # 'password': '',
-            # 'port': 465 
+            'sender_email': '',
+            'password': '',
+            'smtp_server': 'email-ssl.com.br',
+            'port': 465 
 
 
             #prod configs
-            'sender_email': os.environ['EMAIL'],
-            'password': os.environ['MAIL_PASSWORD'],
-            'smtp_server': 'smtplw.com.br',
-            'port': 465 
+            # 'sender_email': os.environ['EMAIL'],
+            # 'password': os.environ['MAIL_PASSWORD'],
+            # 'smtp_server': 'email-ssl.com.br',
+            # 'port': 465 
         }
 
 class DB:
     
-    #DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
-    DATABASE_URL = os.environ['DB_URL']
+    DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
+    # DATABASE_URL = os.environ['DB_URL']
 
     connection = Database(DATABASE_URL)
 

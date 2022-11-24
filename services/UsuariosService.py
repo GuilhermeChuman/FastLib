@@ -40,21 +40,16 @@ class UsuariosServices:
 
         cadUser = await UsuariosRepository.signup(item)
 
-        mail = ActivateEmail.getBody(cadUser['nome'], '')
+        mail = await ActivateEmail.getBody(cadUser['nome'], '')
 
-        try:
-            UsuariosServices.sendMail(cadUser['email'], mail['body'], mail['subject'])
-
-        except Exception as e:
-
-            return e
+        cadUser['emailEnviado'] = await UsuariosServices.sendMail(cadUser['email'], mail['body'], mail['subject'])
 
         return cadUser
 
 
     async def sendMail(receiver_email, message, subject):
 
-        mailConf = Mail.getMailConfigs()
+        mailConf = await Mail.getMailConfigs()
 
         content = MIMEMultipart("alternative")
         content["Subject"] = subject
@@ -66,10 +61,18 @@ class UsuariosServices:
         content.attach(body)
 
         # Create a secure SSL context
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(mailConf['smtp_server'], mailConf['port'], context=context) as server:
-            server.login(mailConf['sender_email'], mailConf['password'])
-            server.sendmail(mailConf['sender_email'], receiver_email, content.as_string())
+        try:
+
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(mailConf['smtp_server'], mailConf['port'], context=context) as server:
+                server.login(mailConf['sender_email'], mailConf['password'])
+                server.sendmail(mailConf['sender_email'], receiver_email, content.as_string())
+
+        except Exception as e:
+
+            return e
+
+        return True
 
 
     async def addUsuario(item):
