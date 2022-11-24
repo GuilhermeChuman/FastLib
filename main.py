@@ -98,7 +98,7 @@ async def standard():
 async def autenticate(item: AuthRequests):
     return await UsuariosController.auth(item.dict())
 
-@app.post("/user/signup", tags=["Auth"], summary="")
+@app.post("/signup", tags=["Auth"], summary="")
 async def signup(item: SignupRequests):
     return await UsuariosController.signup(item.dict())
 

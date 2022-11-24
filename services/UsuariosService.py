@@ -40,7 +40,7 @@ class UsuariosServices:
 
         cadUser = await UsuariosRepository.signup(item)
 
-        mail = await ActivateEmail.getBody(cadUser['nome'], '')
+        mail = await ActivateEmail.getBody(cadUser['nome'], 'http://localhost:4200/auth/activateLogin?token=')
 
         cadUser['emailEnviado'] = await UsuariosServices.sendMail(cadUser['email'], mail['body'], mail['subject'])
 

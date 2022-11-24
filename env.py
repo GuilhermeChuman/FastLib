@@ -10,8 +10,8 @@ class Mail:
         
         return {
             #local configs
-            'sender_email': '',
-            'password': '',
+            'sender_email': 'atendimento@silverfishlib.com.br',
+            'password': 'Newsenha+4',
             'smtp_server': 'email-ssl.com.br',
             'port': 465 
 
