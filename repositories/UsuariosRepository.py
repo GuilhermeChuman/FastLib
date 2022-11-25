@@ -29,6 +29,18 @@ class UsuariosRepository:
         else:
             return rows
 
+    async def validateAccount(item):
+
+        values = item
+        queryValid = UsuariosQueries.validateAccount
+        rows = await DB.connection.fetch_one(query=queryValid, values=values)
+
+        if rows == None:
+            return False
+
+        else:
+            return rows
+
     async def identifyToken(token):
 
         values = {'validationToken': token}
@@ -109,6 +121,22 @@ class UsuariosRepository:
         
         return token 
 
+    async def recoverPassword(data):
+
+        newPassword = UsuariosRepository.generateToken()
+
+        form = {
+            'login': data['login'],
+            'password': newPassword,
+            'nome': data['nome'],
+            'email': data['email'],
+            'validationToken': data['validationToken'],
+            'status': data['status']
+        }
+
+        await UsuariosRepository.editUsuario(data['id'], form)
+
+        return newPassword 
         
     async def validateToken(token):
 

@@ -17,6 +17,7 @@ from controllers.ListasController import ListasController
 from requests.UsuarioRequests import UsuarioRequests
 from requests.UsuarioRequests import AuthRequests
 from requests.UsuarioRequests import SignupRequests
+from requests.UsuarioRequests import RecoverPasswordRequest
 
 from requests.GeneroRequests import GeneroRequests
 from requests.AutorRequests import AutorRequests
@@ -101,6 +102,10 @@ async def autenticate(item: AuthRequests):
 @app.post("/signup", tags=["Auth"], summary="")
 async def signup(item: SignupRequests):
     return await UsuariosController.signup(item.dict())
+
+@app.post("/recoverPassword", tags=["Auth"], summary="")
+async def recoverPassword(item: RecoverPasswordRequest):
+    return await UsuariosController.recoverPassword(item.dict())
 
 @app.get("/validateToken/{token}", tags=["Auth"], summary="")
 async def identifyToken(token: str):

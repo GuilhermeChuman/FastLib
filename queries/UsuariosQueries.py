@@ -4,6 +4,8 @@ class UsuariosQueries:
 
     validateToken = "SELECT * FROM usuarios WHERE validationToken = :validationToken"
 
+    validateAccount = "SELECT * FROM usuarios WHERE login = :login AND email = :email"
+
     activateAccount =  "UPDATE usuarios "
     activateAccount += "SET status = 'C', validationToken = :newToken "
     activateAccount += "WHERE validationToken = :validationToken "

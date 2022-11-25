@@ -13,6 +13,10 @@ class AuthRequests(BaseModel):
     login: str
     password: str
 
+class RecoverPasswordRequest(BaseModel):
+    login: str
+    email: str
+
 class SignupRequests(BaseModel):
     nome: str
     email: str
