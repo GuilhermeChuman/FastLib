@@ -4,6 +4,10 @@ class UsuariosQueries:
 
     validateToken = "SELECT * FROM usuarios WHERE validationToken = :validationToken"
 
+    activateAccount =  "UPDATE usuarios "
+    activateAccount += "SET status = 'C', validationToken = :newToken "
+    activateAccount += "WHERE validationToken = :validationToken "
+
     addLista =  "INSERT INTO listas(login, idUsuario) "
     addLista += "VALUES (:login, :idUsuario) "
 

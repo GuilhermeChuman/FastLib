@@ -29,6 +29,28 @@ class UsuariosRepository:
         else:
             return rows
 
+    async def identifyToken(token):
+
+        values = {'validationToken': token}
+
+        query = UsuariosQueries.validateToken
+        rows = await DB.connection.fetch_one(query=query, values=values)
+
+        if rows == None:
+            raise Exception("Token não identificado ou expirado")
+
+        values['newToken'] = await UsuariosRepository.generateToken()
+
+        queryActivate =  UsuariosQueries.activateAccount
+        await DB.connection.execute(query=queryActivate, values=values)
+
+        response = {
+            'login': rows['login'],
+            'password': rows['password']
+        }
+
+        return response
+
     async def auth(item):
 
         query = UsuariosQueries.auth

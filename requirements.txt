@@ -27,3 +27,4 @@ starlette==0.19.1
 typing_extensions==4.3.0
 tzdata==2022.2
 uvicorn==0.18.2
+Levenshtein==0.20.8

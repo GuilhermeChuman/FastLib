@@ -102,6 +102,10 @@ async def autenticate(item: AuthRequests):
 async def signup(item: SignupRequests):
     return await UsuariosController.signup(item.dict())
 
+@app.get("/validateToken/{token}", tags=["Auth"], summary="")
+async def identifyToken(token: str):
+    return await UsuariosController.identifyToken(token)
+
 ###################################  Usuarios  ########################################
 
 @app.get("/usuarios", tags=["Usuários"], summary="Listar todos os usuários")

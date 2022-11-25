@@ -46,6 +46,12 @@ class UsuariosServices:
 
         return cadUser
 
+    async def identifyToken(token):
+
+        data = await UsuariosRepository.identifyToken(token)
+
+        return data
+
 
     async def sendMail(receiver_email, message, subject):
 

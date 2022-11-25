@@ -51,6 +51,17 @@ class UsuariosController:
             
             return { "success": False, "message":str(e), "data": None}
 
+    async def identifyToken(token):
+
+        try:
+
+            response = await UsuariosServices.identifyToken(token)
+            return { "success": True, "message":"OK", "data": response}
+
+        except Exception as e:
+            
+            return { "success": False, "message":str(e), "data": None}
+
     async def addUsuario(item):
 
         try:
