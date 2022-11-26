@@ -10,17 +10,17 @@ class Mail:
         
         return {
             #local configs
-            'sender_email': '',
-            'password': '',
-            'smtp_server': 'email-ssl.com.br',
-            'port': 465 
+            # 'sender_email': '',
+            # 'password': '',
+            # 'smtp_server': 'email-ssl.com.br',
+            # 'port': 465 
 
 
             #prod configs
-            # 'sender_email': os.environ['EMAIL'],
-            # 'password': os.environ['MAIL_PASSWORD'],
-            # 'smtp_server': 'email-ssl.com.br',
-            # 'port': 465 
+            'sender_email': os.environ['EMAIL'],
+            'password': os.environ['MAIL_PASSWORD'],
+            'smtp_server': 'email-ssl.com.br',
+            'port': 465 
         }
 
 class DB:
