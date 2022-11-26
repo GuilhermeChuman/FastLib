@@ -123,7 +123,7 @@ class UsuariosRepository:
 
     async def recoverPassword(data):
 
-        newPassword = UsuariosRepository.generateToken()
+        newPassword = await UsuariosRepository.generateToken()
 
         form = {
             'login': data['login'],

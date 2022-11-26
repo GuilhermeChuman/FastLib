@@ -63,7 +63,7 @@ class UsuariosServices:
         else:
             newPassword = await UsuariosRepository.recoverPassword(data)
             mail = await RecoveryPassword.getBody(data['nome'], newPassword)
-            await UsuariosServices.sendMail(item['email'], mail['body'], mail['subject'], newPassword)
+            await UsuariosServices.sendMail(item['email'], mail['body'], mail['subject'])
 
         return True
 

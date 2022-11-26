@@ -48,7 +48,7 @@ class RecoveryPassword:
 
                             <br>
                             <center>
-                                <h1> """+password+"""\ </h1> 
+                                <h1> """+password+" "+"""\ </h1> 
                             </center>
                             
                             <br>
