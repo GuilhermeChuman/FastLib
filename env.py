@@ -25,8 +25,8 @@ class Mail:
 
 class DB:
     
-    # DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
-    DATABASE_URL = os.environ['DB_URL']
+    DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
+    # DATABASE_URL = os.environ['DB_URL']
 
     connection = Database(DATABASE_URL)
 
