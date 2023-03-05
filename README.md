@@ -7,13 +7,14 @@
  <p> $ pip install fastapi </p>
  <p> $ pip install python-multipart </p>
  <p> $ pip install pandas </p>
+ <p> $ pip install gensim </p>
 
 <h2>HOW TO RUN </h2>
  <p> $ python3 -m uvicorn main:app --reload </p>
 
 <h2>HOSTING ON HEROKU</h2>
 
-You can host this aplication on <a href="https://Fwww.heroku.com">Heroku</a> having the Procfile and requirements.txt files and so:
+You can host this aplication on <a href="https://www.heroku.com">Heroku</a> having the Procfile and requirements.txt files and so:
 
 <p> 1. Install Heroku CLI </p>
 ```

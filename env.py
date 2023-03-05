@@ -16,7 +16,7 @@ class Mail:
             # 'port': 465 
 
 
-            #prod configs
+            # prod configs
             'sender_email': os.environ['EMAIL'],
             'password': os.environ['MAIL_PASSWORD'],
             'smtp_server': 'email-ssl.com.br',
@@ -25,7 +25,7 @@ class Mail:
 
 class DB:
     
-    # DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
+    #DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/biblioteca"
     DATABASE_URL = os.environ['DB_URL']
 
     connection = Database(DATABASE_URL)

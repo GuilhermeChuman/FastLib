@@ -4,7 +4,7 @@ import ast
 from itertools import groupby
 from operator import itemgetter
 from fuzzywuzzy import fuzz
-
+import yake
 
 sys.path.append('../')
 
@@ -190,6 +190,23 @@ class LivrosService:
         return newRows
 
     async def addLivro(item):
+
+        kw_extractor = yake.KeywordExtractor()
+        text = item['descricao']
+        language = "pt"
+        max_ngram_size = 3
+        deduplication_threshold = 0.9
+        numOfKeywords = 30
+        custom_kw_extractor = yake.KeywordExtractor(lan=language, n=max_ngram_size, dedupLim=deduplication_threshold, top=numOfKeywords, features=None)
+
+        palavra_chave = custom_kw_extractor.extract_keywords(text)
+
+        for kw in palavra_chave:
+            print(kw)
+
+        return None
+        
+        #if(item['palavraChave1'] == None or  item['palavraChave1'] == ''):
 
         response = await LivrosRepository.addLivro(item)
 

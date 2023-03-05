@@ -22,4 +22,3 @@ class SignupRequests(BaseModel):
     email: str
     login: str
     password: str
-    
